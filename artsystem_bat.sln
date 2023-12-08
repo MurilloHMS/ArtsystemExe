@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artsystem_bat", "artsystem_bat.csproj", "{4D22729D-A80D-4F1E-992A-3C048B567992}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		final|Any CPU = final|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D22729D-A80D-4F1E-992A-3C048B567992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D22729D-A80D-4F1E-992A-3C048B567992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D22729D-A80D-4F1E-992A-3C048B567992}.final|Any CPU.ActiveCfg = Release|Any CPU
+		{4D22729D-A80D-4F1E-992A-3C048B567992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D22729D-A80D-4F1E-992A-3C048B567992}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E577E38-8A20-4922-86BC-16EBC253C79F}
+	EndGlobalSection
+EndGlobal
