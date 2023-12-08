@@ -24,10 +24,21 @@ namespace artsystem_bat
         {
             var pathInitial = System.Configuration.ConfigurationManager.AppSettings["pathIni"];
             var pathBat = System.Configuration.ConfigurationManager.AppSettings["pathBat"];
+            var verOcx = System.Configuration.ConfigurationManager.AppSettings["verOcx"];
 
             tbPath.Text = (string) pathInitial;
             tbBat.Text = (string) pathBat;
+            if (verOcx == "true")
+            {
+                cbOcx.Checked = true;
+
+            }
+            else if (verOcx == "false")
+            {
+                cbOcx.Checked = false;
+            }
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -36,6 +47,7 @@ namespace artsystem_bat
 
             tbPath.Enabled = true;
             tbBat.Enabled = true;
+            cbOcx.Enabled = true;
 
             if (btAlterar.Text == "ALTERAR")
             {
@@ -47,6 +59,16 @@ namespace artsystem_bat
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings["pathIni"].Value = tbPath.Text;
                 config.AppSettings.Settings["pathBat"].Value = tbBat.Text;
+                if (cbOcx.Checked)
+                {
+                    config.AppSettings.Settings["verOcx"].Value = "true";
+                }
+                else
+                {
+                    config.AppSettings.Settings["verOcx"].Value = "false";
+                      
+                }
+                
                 config.Save(ConfigurationSaveMode.Minimal);
 
                 MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -57,6 +79,7 @@ namespace artsystem_bat
 
                 tbPath.Enabled = false;
                 tbBat.Enabled = false;
+                cbOcx.Enabled = false;
                 btAlterar.Text = "ALTERAR";
             }
 
@@ -101,5 +124,7 @@ namespace artsystem_bat
                 }
             }                       
         }
+
+       
     }
 }

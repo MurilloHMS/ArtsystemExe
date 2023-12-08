@@ -37,6 +37,7 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.cbOcx = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tbPath
@@ -117,11 +118,23 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // cbOcx
+            // 
+            this.cbOcx.AutoSize = true;
+            this.cbOcx.Enabled = false;
+            this.cbOcx.Location = new System.Drawing.Point(271, 12);
+            this.cbOcx.Name = "cbOcx";
+            this.cbOcx.Size = new System.Drawing.Size(89, 17);
+            this.cbOcx.TabIndex = 10;
+            this.cbOcx.Text = "Verificar OCX";
+            this.cbOcx.UseVisualStyleBackColor = true;
+            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(363, 184);
+            this.Controls.Add(this.cbOcx);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCancelar);
@@ -150,5 +163,6 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox cbOcx;
     }
 }
