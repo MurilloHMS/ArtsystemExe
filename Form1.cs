@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -64,8 +65,18 @@ namespace artsystem_bat
             var pathBat =new ProcessStartInfo( System.Configuration.ConfigurationManager.AppSettings["pathBat"]);
             pathBat.WindowStyle = ProcessWindowStyle.Hidden;
 
-            object value = Process.Start($"@{pathBat}");
-            Application.Exit();
+            try
+            {
+                object value = Process.Start(@pathBat);
+            }
+            catch(Win32Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                Application.Exit();
+            }
         }
 
         private async void RunDirectoryVerification()

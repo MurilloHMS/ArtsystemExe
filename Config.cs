@@ -70,31 +70,36 @@ namespace artsystem_bat
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-
-            using (OpenFileDialog ofd = new OpenFileDialog())
+            if (tbPath.Enabled)
             {
-                ofd.InitialDirectory = @"C:\";
-                ofd.RestoreDirectory = true;
-
-                if(ofd.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog ofd = new OpenFileDialog())
                 {
-                    tbBat.Text = ofd.FileName;
+                    ofd.InitialDirectory = @"C:\";
+                    ofd.RestoreDirectory = true;
+
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        tbBat.Text = ofd.FileName;
+                    }
                 }
-            }
+            }            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (var fbd = new FolderBrowserDialog())
+            if (tbBat.Enabled)
             {
-                DialogResult result = fbd.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                using (var fbd = new FolderBrowserDialog())
                 {
-                    string[] files = Directory.GetFiles(fbd.SelectedPath);
-                    tbPath.Text = fbd.SelectedPath;
+                    DialogResult result = fbd.ShowDialog();
+
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        string[] files = Directory.GetFiles(fbd.SelectedPath);
+                        tbPath.Text = fbd.SelectedPath;
+                    }
                 }
-            }
+            }                       
         }
     }
 }

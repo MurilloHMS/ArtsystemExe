@@ -1,0 +1,9 @@
+A:\artsystem_bat\bin\ArtSystem_Bat\artsystem_bat.exe.config
+A:\artsystem_bat\bin\ArtSystem_Bat\artsystem_bat.exe
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.csproj.AssemblyReference.cache
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.Config.resources
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.Form1.resources
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.Properties.Resources.resources
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.csproj.GenerateResource.cache
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.csproj.CoreCompileInputs.cache
+A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.exe

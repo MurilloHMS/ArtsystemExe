@@ -15,7 +15,7 @@ namespace artsystem_bat
         [STAThread]
         static void Main(String[] args)
         {
-            if (args.Length < 1 || args[0] != "config")
+            if (args.Length < 1 || args[0] != "config" && args[0] != "CONFIG")
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
