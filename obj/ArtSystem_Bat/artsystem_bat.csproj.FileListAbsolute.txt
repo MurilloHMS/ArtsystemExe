@@ -7,3 +7,12 @@ A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.Properties.Resources.resources
 A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.csproj.GenerateResource.cache
 A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.csproj.CoreCompileInputs.cache
 A:\artsystem_bat\obj\ArtSystem_Bat\artsystem_bat.exe
+A:\Artsystem\ArtsystemExe\bin\ArtSystem_Bat\artsystem_bat.exe.config
+A:\Artsystem\ArtsystemExe\bin\ArtSystem_Bat\artsystem_bat.exe
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.csproj.AssemblyReference.cache
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.Config.resources
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.Form1.resources
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.Properties.Resources.resources
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.csproj.GenerateResource.cache
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.csproj.CoreCompileInputs.cache
+A:\Artsystem\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.exe

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -87,15 +88,22 @@ namespace artsystem_bat
         {
             await Task.Delay(2000);
             
-            var pathBat =new ProcessStartInfo( System.Configuration.ConfigurationManager.AppSettings["pathBat"]);
-            pathBat.WindowStyle = ProcessWindowStyle.Hidden;
+            var pathBat =System.Configuration.ConfigurationManager.AppSettings["pathBat"];
+            //pathBat.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
             {
-                Process processo = Process.Start(@pathBat);
+                //Process processo = Process.Start();
+
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = @pathBat,
+                    WorkingDirectory = @pathBat.Substring(0,2),
+                    WindowStyle = ProcessWindowStyle.Hidden
+                }).WaitForExit();
 
                 // Aguarda até que o processo termine
-                processo.WaitForExit();
+                //processo.WaitForExit();
             }
             catch (Win32Exception ex)
             {
@@ -130,17 +138,41 @@ namespace artsystem_bat
             }
         }
 
+        static bool VerificarRegistro(string nomeDLL)
+        {
+            bool achou = false;
+            RegistryKey clsid = Registry.ClassesRoot.OpenSubKey("CLSID");
+            string[] ClsIDs = clsid.GetSubKeyNames();
+            string subkey = "";
+
+            for (int i = 0; i < ClsIDs.Length; i++)
+            {
+                subkey = ClsIDs[i];
+                if (subkey.Substring(0, 1) != "{") continue;
+                RegistryKey cls = Registry.ClassesRoot.OpenSubKey("CLSID\\" + subkey + "\\InprocServer32");
+                if (cls == null) continue;
+                string x = cls.GetValue("", "").ToString();
+                if (x.IndexOf(nomeDLL) >= 0)
+                {
+                    achou = true;
+                    break;
+                }
+            }
+
+            return achou;
+        }
+
         public void RunOcxVerification()
         {
 
             List<string> OcxList = new List<string>
             {
-                 "mschrt20.ocx",
-                 "comctl32.ocx",
-                 "mscomct2.ocx",
-                 "mscomctl.ocx",
-                 "mscomm32.ocx",
-                 "comctl32.ocx"
+                 "mschrt20.dll",
+                 "comctl32.dll",
+                 "mscomct2.dll",
+                 "mscomctl.dll",
+                 "mscomm32.dll",
+                 "comctl32.dll"
             };
 
             StringBuilder resultMessage = new StringBuilder();
