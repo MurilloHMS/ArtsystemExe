@@ -1,20 +1,16 @@
-﻿using Microsoft.Win32;
+﻿using artsystem_bat.Entities;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Configuration;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace artsystem_bat
 {
@@ -44,6 +40,9 @@ namespace artsystem_bat
 
                     Process process = Process.Start(startInfo);
                     process.WaitForExit();
+                    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    config.AppSettings.Settings["verOcx"].Value = "false";
+
                 }
                 catch (Win32Exception ex)
                 {
@@ -89,21 +88,17 @@ namespace artsystem_bat
             await Task.Delay(2000);
             
             var pathBat =System.Configuration.ConfigurationManager.AppSettings["pathBat"];
-            //pathBat.WindowStyle = ProcessWindowStyle.Hidden;
 
             try
             {
-                //Process processo = Process.Start();
-
+               
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = @pathBat,
-                    WorkingDirectory = @pathBat.Substring(0,2),
-                    WindowStyle = ProcessWindowStyle.Hidden
-                }).WaitForExit();
-
-                // Aguarda até que o processo termine
-                //processo.WaitForExit();
+                    WorkingDirectory = @pathBat.Substring(0,2), // Informa em qual diretório irá rodar o arquivo
+                    WindowStyle = ProcessWindowStyle.Hidden // Esconde o processo a ser executado
+                }).WaitForExit(); // Aguarda até que o processo termine
+                
             }
             catch (Win32Exception ex)
             {
@@ -137,43 +132,55 @@ namespace artsystem_bat
                 RunAsync();
             }
         }
-
-        static bool VerificarRegistro(string nomeDLL)
+        static bool IsOCXInstalled(string ocxName)
         {
             bool achou = false;
-            RegistryKey clsid = Registry.ClassesRoot.OpenSubKey("CLSID");
-            string[] ClsIDs = clsid.GetSubKeyNames();
-            string subkey = "";
 
-            for (int i = 0; i < ClsIDs.Length; i++)
+            try
             {
-                subkey = ClsIDs[i];
-                if (subkey.Substring(0, 1) != "{") continue;
-                RegistryKey cls = Registry.ClassesRoot.OpenSubKey("CLSID\\" + subkey + "\\InprocServer32");
-                if (cls == null) continue;
-                string x = cls.GetValue("", "").ToString();
-                if (x.IndexOf(nomeDLL) >= 0)
+                RegistryKey key = Registry.ClassesRoot.OpenSubKey("Wow6432Node\\CLSID");
+                if (key == null)
                 {
-                    achou = true;
-                    break;
+                    key = Registry.ClassesRoot.OpenSubKey("CLSID");
                 }
+
+                if (key != null)
+                {
+                    foreach (var subKeyName in key.GetSubKeyNames())
+                    {
+                        RegistryKey clsidKey = key.OpenSubKey(subKeyName + "\\InprocServer32");
+                        if (clsidKey != null)
+                        {
+                            object value = clsidKey.GetValue("");
+                            if (value != null && value.ToString().IndexOf(ocxName, StringComparison.OrdinalIgnoreCase) >= 0)
+                            {
+                                achou = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao verificar OCX {ocxName}: {ex.Message}");
+                // Adicione tratamento de erro adequado conforme necessário
             }
 
             return achou;
         }
 
-        public void RunOcxVerification()
+        static void RunOcxVerification()
         {
-
             List<string> OcxList = new List<string>
-            {
-                 "mschrt20.dll",
-                 "comctl32.dll",
-                 "mscomct2.dll",
-                 "mscomctl.dll",
-                 "mscomm32.dll",
-                 "comctl32.dll"
-            };
+        {
+             "mschrt20.ocx",
+             "comctl32.ocx",
+             "mscomct2.ocx",
+             "mscomctl.ocx",
+             "mscomm32.ocx",
+             "comctl32.ocx"
+        };
 
             StringBuilder resultMessage = new StringBuilder();
 
@@ -189,34 +196,10 @@ namespace artsystem_bat
                 }
             }
 
-            MessageBox.Show(resultMessage.ToString(), "Verificação OCX Artsystem", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            MessageBox.Show(resultMessage.ToString(), "Verificação OCX", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        static bool IsOCXInstalled(string ocxName)
-        {
-            try
-            {
-                // Tenta criar uma instância da OCX usando Reflection
-                Type type = Type.GetTypeFromProgID(ocxName);
-                if (type != null)
-                {
-                    Activator.CreateInstance(type);
-                    // Se não ocorrerem exceções, a OCX está instalada
-                    return true;
-                }
-
-                // Se o tipo não puder ser obtido, a OCX não está instalada
-                return false;
-            }
-            catch (Exception)
-            {
-                // Se ocorrer uma exceção, a OCX não está instalada
-                return false;
-            }
-        }
-
-            private void btCancel_Click(object sender, EventArgs e)
+        private void btCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
