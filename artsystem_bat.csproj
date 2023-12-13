@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ArtSystem.ico</ApplicationIcon>
+    <ApplicationIcon>Templates\ArtSystem.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -56,25 +56,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs">
+    <Compile Include="Model\Ocx.cs" />
+    <Compile Include="UI\Config.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Config.Designer.cs">
+    <Compile Include="UI\Config.Designer.cs">
       <DependentUpon>Config.cs</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Config.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="UI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="UI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Model\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Config.resx">
+    <EmbeddedResource Include="UI\Config.resx">
       <DependentUpon>Config.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="UI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -97,10 +97,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Data\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ArtSystem.ico" />
+    <Content Include="Templates\ArtSystem.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Business\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
