@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using artsystem_bat.Data;
 
 namespace artsystem_bat
 {
@@ -22,21 +23,18 @@ namespace artsystem_bat
 
         private void Config_Load(object sender, EventArgs e)
         {
-            var pathInitial = System.Configuration.ConfigurationManager.AppSettings["pathIni"];
-            var pathBat = System.Configuration.ConfigurationManager.AppSettings["pathBat"];
-            var verOcx = System.Configuration.ConfigurationManager.AppSettings["verOcx"];
 
-            tbPath.Text = (string) pathInitial;
-            tbBat.Text = (string) pathBat;
-            if (verOcx == "true")
-            {
-                cbOcx.Checked = true;
+            Entities entities = new Entities();
 
-            }
-            else if (verOcx == "false")
-            {
-                cbOcx.Checked = false;
-            }
+            var pathInitial = entities.PathInitial;
+            var pathBat = entities.PathBat;
+            var verOcx = entities.VerOcx;
+
+            // Atribua os valores aos controles da interface
+            tbPath.Text = pathInitial;
+            tbBat.Text = pathBat;
+
+            cbOcx.Checked = Convert.ToBoolean(verOcx);
         }
 
 
@@ -55,21 +53,12 @@ namespace artsystem_bat
             } 
             else if (btAlterar.Text == "Salvar" && tbPath.Enabled == true)
             {
-
-                var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings["pathIni"].Value = tbPath.Text;
-                config.AppSettings.Settings["pathBat"].Value = tbBat.Text;
-                if (cbOcx.Checked)
-                {
-                    config.AppSettings.Settings["verOcx"].Value = "true";
-                }
-                else
-                {
-                    config.AppSettings.Settings["verOcx"].Value = "false";
-                      
-                }
+                Entities entities = new Entities();
                 
-                config.Save(ConfigurationSaveMode.Minimal);
+                //Atualiza as propriedades usando os setters
+                entities.PathInitial = tbPath.Text;
+                entities.PathBat = tbBat.Text;
+                entities.VerOcx =  cbOcx.Checked ? "true" : "false"; // Substitui o if abaixo
 
                 MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -82,8 +71,6 @@ namespace artsystem_bat
                 cbOcx.Enabled = false;
                 btAlterar.Text = "ALTERAR";
             }
-
-
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Entities.cs" />
     <Compile Include="Model\Ocx.cs" />
     <Compile Include="UI\Config.cs">
       <SubType>Form</SubType>

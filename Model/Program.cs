@@ -15,17 +15,17 @@ namespace artsystem_bat
         [STAThread]
         static void Main(String[] args)
         {
-            if (args.Length < 1 || args[0] != "config" && args[0] != "CONFIG" && args[0] !="-c" && args[0] != "-C")
+            if (args.Length < 1 || args[0] != "config" && args[0] != "CONFIG" && args[0] !="-c" && args[0] != "-C") //Valores para abri as configurações do sistema ex: artsystem_bat.exe config 
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                Application.Run(new Form1()); //Chama o programa
             }
             else
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Config());
+                Application.Run(new Config()); //Chama as configurações
             }
 
         }
