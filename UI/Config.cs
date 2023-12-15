@@ -47,30 +47,33 @@ namespace artsystem_bat
             tbBat.Enabled = true;
             cbOcx.Enabled = true;
 
-            if (btAlterar.Text == "ALTERAR")
+            switch (btAlterar.Text)
             {
-                btAlterar.Text = "Salvar";
-            } 
-            else if (btAlterar.Text == "Salvar" && tbPath.Enabled == true)
-            {
-                Entities entities = new Entities();
-                
-                //Atualiza as propriedades usando os setters
-                entities.PathInitial = tbPath.Text;
-                entities.PathBat = tbBat.Text;
-                entities.VerOcx =  cbOcx.Checked ? "true" : "false"; // Substitui o if abaixo
+                case string value when value == "ALTERAR":
+                    btAlterar.Text = "Salvar";
+                    break;
 
-                MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                case string value when value == "Salvar":
+                    Entities entities = new Entities();
+
+                    //Atualiza as propriedades usando os setters
+                    entities.PathInitial = tbPath.Text;
+                    entities.PathBat = tbBat.Text;
+                    entities.VerOcx = cbOcx.Checked ? "true" : "false"; // Substitui o if abaixo
+
+                    MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-                tbPath.BackColor = SystemColors.InactiveCaption;
-                tbBat.BackColor = SystemColors.InactiveCaption;
+                    tbPath.BackColor = SystemColors.InactiveCaption;
+                    tbBat.BackColor = SystemColors.InactiveCaption;
 
-                tbPath.Enabled = false;
-                tbBat.Enabled = false;
-                cbOcx.Enabled = false;
-                btAlterar.Text = "ALTERAR";
-            }
+                    tbPath.Enabled = false;
+                    tbBat.Enabled = false;
+                    cbOcx.Enabled = false;
+                    btAlterar.Text = "ALTERAR";
+                    break;
+
+            }            
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -84,7 +87,7 @@ namespace artsystem_bat
             {
                 using (OpenFileDialog ofd = new OpenFileDialog())
                 {
-                    ofd.InitialDirectory = @"C:\";
+                    ofd.InitialDirectory = tbPath.Text;
                     ofd.RestoreDirectory = true;
 
                     if (ofd.ShowDialog() == DialogResult.OK)

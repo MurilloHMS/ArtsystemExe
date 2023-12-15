@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using artsystem_bat.Model;
+using artsystem_bat.Data;
 
 namespace artsystem_bat
 {
@@ -23,8 +24,10 @@ namespace artsystem_bat
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //Instancia a classe entidades
+            Entities entities = new Entities();
             // Recupera valores de configuração do aplicativo
-            var verOcx = System.Configuration.ConfigurationManager.AppSettings["verOcx"];
+            var verOcx = entities.VerOcx;
 
             // Executa a verificação da OCX se estiver ativada
             if (verOcx == "true")
@@ -46,21 +49,23 @@ namespace artsystem_bat
             // Atualiza a barra de progresso e exibe mensagens com base no progresso
             if (progressBar1.Value < 100)
             {
-                if (progressBar1.Value < 40)
+                switch (progressBar1.Value)
                 {
-                    textBox1.Text = "Carregando arquivos";
-                }
-                else if (progressBar1.Value > 40 && progressBar1.Value < 60)
-                {
-                    textBox1.Text = "Verificando diretórios";
-                }
-                else if (progressBar1.Value > 60 && progressBar1.Value < 80)
-                {
-                    textBox1.Text = "Verificação concluída";
-                }
-                else if (progressBar1.Value > 80)
-                {
-                    textBox1.Text = "Abrindo Artsystem";
+                    case int value when value < 40:
+                        textBox1.Text = "Carregando arquivos";
+                        break;
+
+                    case int value when value >= 40 && value < 60:
+                        textBox1.Text = "Verificando diretórios";
+                        break;
+
+                    case int value when value >= 60 && value < 80:
+                        textBox1.Text = "Verificação concluída";
+                        break;
+
+                    case int value when value >= 80:
+                        textBox1.Text = "Abrindo Artsystem";
+                        break;
                 }
                 progressBar1.Value++;
             }
@@ -75,8 +80,11 @@ namespace artsystem_bat
         {
             await Task.Delay(2000);
 
+            //Instancia a classe entidades
+            Entities entities = new Entities();
+
             // Obtém o caminho do arquivo bat a ser executado
-            var pathBat = System.Configuration.ConfigurationManager.AppSettings["pathBat"];
+            var pathBat = entities.PathBat;
 
             try
             {
@@ -103,8 +111,11 @@ namespace artsystem_bat
         {
             await Task.Delay(1700);
 
+            //Instancia a classe entidades
+            Entities entities = new Entities();
+
             // Obtém o caminho do diretório a ser verificado
-            var pathInitial = System.Configuration.ConfigurationManager.AppSettings["pathIni"];
+            var pathInitial = entities.PathInitial;
 
             // Verifica se o diretório existe
             if (!Directory.Exists(pathInitial))
