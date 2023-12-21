@@ -85,25 +85,37 @@ namespace artsystem_bat
 
             // Obtém o caminho do arquivo bat a ser executado
             var pathBat = entities.PathBat;
+            string directory = Path.GetDirectoryName(@pathBat);
+
 
             try
             {
-                // Inicia o processo do arquivo bat
-                Process.Start(new ProcessStartInfo
+                ArtBat art = new ArtBat();
+                art.ArtBatExe(directory);          
+            }
+            catch
+            {
+                try
                 {
-                    FileName = @pathBat,
-                    WorkingDirectory = Path.GetDirectoryName(@pathBat), // Informa em qual diretório irá rodar o arquivo
-                    WindowStyle = ProcessWindowStyle.Hidden // Esconde o processo a ser executado
-                }).WaitForExit(); // Aguarda até que o processo termine
+                    // Inicia o processo do arquivo bat
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = @pathBat,
+                        WorkingDirectory = Path.GetDirectoryName(@pathBat), // Informa em qual diretório irá rodar o arquivo
+                        WindowStyle = ProcessWindowStyle.Hidden // Esconde o processo a ser executado
+                    }).WaitForExit(); // Aguarda até que o processo termine
+                }
+                catch (Win32Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    Close(); // Fecha o formulário após a conclusão do processo
+                }
+
             }
-            catch (Win32Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                Close(); // Fecha o formulário após a conclusão do processo
-            }
+            
         }
 
         // Método assíncrono para verificação do diretório
