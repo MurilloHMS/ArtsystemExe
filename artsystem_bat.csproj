@@ -7,7 +7,7 @@
     <ProjectGuid>{4D22729D-A80D-4F1E-992A-3C048B567992}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>artsystem_bat</RootNamespace>
-    <AssemblyName>artsystem_bat</AssemblyName>
+    <AssemblyName>ArtSystem_Bat</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

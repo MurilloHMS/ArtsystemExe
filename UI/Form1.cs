@@ -92,7 +92,7 @@ namespace artsystem_bat
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = @pathBat,
-                    WorkingDirectory = @pathBat.Substring(0, 2), // Informa em qual diretório irá rodar o arquivo
+                    WorkingDirectory = Path.GetDirectoryName(@pathBat), // Informa em qual diretório irá rodar o arquivo
                     WindowStyle = ProcessWindowStyle.Hidden // Esconde o processo a ser executado
                 }).WaitForExit(); // Aguarda até que o processo termine
             }

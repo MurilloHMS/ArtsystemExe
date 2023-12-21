@@ -23,9 +23,10 @@ namespace artsystem_bat
 
         private void Config_Load(object sender, EventArgs e)
         {
-
+            //Instancia propriedades entities
             Entities entities = new Entities();
 
+            //salva configurações em variaveis
             var pathInitial = entities.PathInitial;
             var pathBat = entities.PathBat;
             var verOcx = entities.VerOcx;

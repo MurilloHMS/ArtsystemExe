@@ -57,7 +57,6 @@ namespace artsystem_bat.Model
             catch (Exception ex)
             {
                 Console.WriteLine($"Erro ao verificar OCX {ocxName}: {ex.Message}");
-                // Adicione tratamento de erro adequado conforme necessário
             }
 
             return achou;
@@ -97,7 +96,7 @@ namespace artsystem_bat.Model
             }
 
             // Exibe a mensagem resultante em uma caixa de diálogo
-            MessageBox.Show(resultMessage.ToString(), "Verificação OCX", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show(resultMessage.ToString(), "Verificação OCX", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
             if(result.Contains("F"))
             {
@@ -118,17 +117,14 @@ namespace artsystem_bat.Model
                     process.WaitForExit();
 
                     // Atualiza a configuração para desativar a verificação de OCX
-                    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                    config.AppSettings.Settings["verOcx"].Value = "false";
+                    //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    //config.AppSettings.Settings["verOcx"].Value = "false";
                 }
                 catch (Win32Exception ex)
                 {
                     MessageBox.Show($"Erro ao iniciar o processo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            
-
-            
+            }            
         }
     }
 }
