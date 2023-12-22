@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace artsystem_bat.Model
@@ -42,7 +38,7 @@ namespace artsystem_bat.Model
             //Inicia o sistema no diretório temporário
             Process process = new Process();
             process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
-            process.StartInfo.WorkingDirectory = tempPath;
+            process.StartInfo.WorkingDirectory = diretorioExe;
             process.EnableRaisingEvents = true;
             
             try

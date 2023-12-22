@@ -1,12 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using artsystem_bat.Data;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
+using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace artsystem_bat.Model
@@ -77,6 +77,7 @@ namespace artsystem_bat.Model
             };
 
             List<string> result = new List<string>();
+            List<string> ocxNotInstalled = new List<string>();
 
             StringBuilder resultMessage = new StringBuilder();
 
@@ -92,6 +93,7 @@ namespace artsystem_bat.Model
                 {
                     resultMessage.AppendLine($"A OCX {ocxName} não está instalada no sistema. ");
                     result.Add("F");
+                    ocxNotInstalled.Add(ocxName);
                 }
             }
 
@@ -100,31 +102,86 @@ namespace artsystem_bat.Model
             
             if(result.Contains("F"))
             {
-                try
+                if (IsRunAsAdministrator())
                 {
-                    // Recupera valores de configuração do aplicativo
-                    var pathInitial = System.Configuration.ConfigurationManager.AppSettings["pathIni"];
-
-                    // Inicia o processo de registro de OCX
-                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    foreach(string ocxName in OcxList)
                     {
-                        FileName = $@"{pathInitial}\REGISTRAR_OCX.bat",
-                        Verb = "runas",  // Solicitar privilégios de administrador
-                        UseShellExecute = true
-                    };
-
-                    Process process = Process.Start(startInfo);
-                    process.WaitForExit();
-
-                    // Atualiza a configuração para desativar a verificação de OCX
-                    //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                    //config.AppSettings.Settings["verOcx"].Value = "false";
+                        RegisterOCX(ocxName);
+                    }
                 }
-                catch (Win32Exception ex)
+                else
                 {
-                    MessageBox.Show($"Erro ao iniciar o processo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        // Recupera valores de configuração do aplicativo
+                        Entities entities = new Entities();
+
+                        //salva configurações em variaveis
+                        var pathInitial = entities.PathInitial;
+
+                        // Inicia o processo de registro de OCX
+                        ProcessStartInfo startInfo = new ProcessStartInfo
+                        {
+                            FileName = $@"{pathInitial}\REGISTRAR_OCX.bat",
+                            Verb = "runas",  // Solicitar privilégios de administrador
+                            UseShellExecute = true
+                        };
+
+                        Process process = Process.Start(startInfo);
+                        process.WaitForExit();
+
+                        // Atualiza a configuração para desativar a verificação de OCX
+                        //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                        //config.AppSettings.Settings["verOcx"].Value = "false";
+                    }
+                    catch (Win32Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao iniciar o processo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
             }            
+        }
+
+        static void RegisterOCX(string ocxName)
+        {
+            Entities entities = new Entities();
+
+            //salva configurações em variaveis
+            var pathBat = entities.PathBat;
+
+            try
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = "regsvr32.exe";
+                process.StartInfo.WorkingDirectory = Path.GetDirectoryName(pathBat);
+                process.StartInfo.Arguments = $"/s {ocxName}";
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                process.Start();
+                //Aguarda o termino do processo
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    MessageBox.Show($"Erro ao registrar o arquivo: {ocxName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        static bool IsRunAsAdministrator()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }
