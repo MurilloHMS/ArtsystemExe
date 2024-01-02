@@ -9,6 +9,7 @@ namespace artsystem_bat.Data
         private string _pathBat;
         private string _verOcx;
 
+
         public string PathInitial
         {
             get { return GetConfigValue("pathIni"); }

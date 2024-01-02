@@ -15,7 +15,7 @@ namespace artsystem_bat.Model
     {
 
         // Método estático para verificar se uma OCX está instalada no sistema
-        static bool IsOCXInstalled(string ocxName)
+        private static bool IsOCXInstalled(string ocxName)
         {
             bool achou = false;
 
@@ -140,10 +140,10 @@ namespace artsystem_bat.Model
                     }
 
                 }
-            }            
+            }
         }
 
-        static void RegisterOCX(string ocxName)
+        private static void RegisterOCX(string ocxName)
         {
             Entities entities = new Entities();
 
@@ -176,7 +176,7 @@ namespace artsystem_bat.Model
             }
         }
 
-        static bool IsRunAsAdministrator()
+        private static bool IsRunAsAdministrator()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
             WindowsPrincipal principal = new WindowsPrincipal(identity);

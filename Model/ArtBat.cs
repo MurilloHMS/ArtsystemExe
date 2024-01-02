@@ -56,7 +56,7 @@ namespace artsystem_bat.Model
         }
 
         //Método para copiar um diretório e seu conteúdo para outro local
-        static void CopyDirectory(string sourcePath, string destPath)
+        private static void CopyDirectory(string sourcePath, string destPath)
         {
             if(!Directory.Exists(destPath)) 
             {
@@ -77,7 +77,7 @@ namespace artsystem_bat.Model
         }
 
         //Método para copiar arquivos correspondentes ao padrão especificado
-        static void CopyFiles(string sourcePath, string destPath, string searchPattern)
+        private static void CopyFiles(string sourcePath, string destPath, string searchPattern)
         {
             string[] files = Directory.GetFiles(sourcePath, searchPattern);
             foreach (string file in files)

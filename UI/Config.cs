@@ -3,10 +3,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using artsystem_bat.Data;
+using artsystem_bat.Model;
 
 namespace artsystem_bat
 {
-    public partial class Config : Form
+    public partial class Config : Form 
     {
         public Config()
         {
@@ -39,6 +40,7 @@ namespace artsystem_bat
             tbPath.Enabled = true;
             tbBat.Enabled = true;
             cbOcx.Enabled = true;
+            cbVMapped.Enabled = true;
 
             switch (btAlterar.Text)
             {
@@ -63,9 +65,33 @@ namespace artsystem_bat
                     tbPath.Enabled = false;
                     tbBat.Enabled = false;
                     cbOcx.Enabled = false;
+                    cbVMapped.Enabled = false;
                     btAlterar.Text = "ALTERAR";
                     break;
 
+                case string value when value == "Mapear":
+
+                    try
+                    {
+                        string networkPath = tbPath.Text;
+                        string driveLetter = cbxLetter.Text;
+
+                        NetworkDrive mappedDrive = new NetworkDrive(networkPath, driveLetter);
+
+                        mappedDrive.MapDrive();
+
+                        btAlterar.Text = "Salvar";
+
+                        tbPath.Text = mappedDrive.GetMappedPath();
+
+                        cbxLetter.Visible = false;
+                        cbVMapped.Checked = false;
+                    }
+                    catch (Exception ex) 
+                    {
+                        MessageBox.Show($"Ocorreu um erro ao mapear a unidade {ex.Message}");
+                    }
+                    break;
             }            
         }
 
@@ -105,9 +131,16 @@ namespace artsystem_bat
                         tbPath.Text = fbd.SelectedPath;
                     }
                 }
-            }                       
+            }
         }
 
-       
+        private void cbVMapped_CheckedChanged(object sender, EventArgs e)
+        {
+            if(cbVMapped.Checked)
+            {
+                cbxLetter.Visible = true;
+                btAlterar.Text = "Mapear";
+            }
+        }
     }
 }

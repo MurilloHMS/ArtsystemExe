@@ -38,6 +38,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.cbOcx = new System.Windows.Forms.CheckBox();
+            this.cbVMapped = new System.Windows.Forms.CheckBox();
+            this.cbxLetter = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // tbPath
@@ -78,7 +80,7 @@
             // 
             // btAlterar
             // 
-            this.btAlterar.Location = new System.Drawing.Point(53, 149);
+            this.btAlterar.Location = new System.Drawing.Point(59, 149);
             this.btAlterar.Name = "btAlterar";
             this.btAlterar.Size = new System.Drawing.Size(108, 23);
             this.btAlterar.TabIndex = 5;
@@ -88,7 +90,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(191, 149);
+            this.btnCancelar.Location = new System.Drawing.Point(173, 149);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(108, 23);
             this.btnCancelar.TabIndex = 6;
@@ -99,7 +101,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(295, 42);
+            this.button1.Location = new System.Drawing.Point(295, 45);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(34, 23);
             this.button1.TabIndex = 7;
@@ -110,7 +112,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button2.Location = new System.Drawing.Point(295, 104);
+            this.button2.Location = new System.Drawing.Point(295, 107);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 23);
             this.button2.TabIndex = 8;
@@ -129,11 +131,61 @@
             this.cbOcx.Text = "Verificar OCX";
             this.cbOcx.UseVisualStyleBackColor = true;
             // 
+            // cbVMapped
+            // 
+            this.cbVMapped.AutoSize = true;
+            this.cbVMapped.Enabled = false;
+            this.cbVMapped.Location = new System.Drawing.Point(160, 12);
+            this.cbVMapped.Name = "cbVMapped";
+            this.cbVMapped.Size = new System.Drawing.Size(105, 17);
+            this.cbVMapped.TabIndex = 10;
+            this.cbVMapped.Text = "Mapear Unidade";
+            this.cbVMapped.UseVisualStyleBackColor = true;
+            this.cbVMapped.CheckedChanged += new System.EventHandler(this.cbVMapped_CheckedChanged);
+            // 
+            // cbxLetter
+            // 
+            this.cbxLetter.FormattingEnabled = true;
+            this.cbxLetter.Items.AddRange(new object[] {
+            "Z:",
+            "Y:",
+            "X:",
+            "W:",
+            "V:",
+            "U:",
+            "T:",
+            "S:",
+            "R:",
+            "Q:",
+            "P:",
+            "O:",
+            "N:",
+            "M:",
+            "L:",
+            "K:",
+            "J:",
+            "I:",
+            "H:",
+            "G:",
+            "F:",
+            "E:",
+            "D:",
+            "C:",
+            "B:",
+            "A:"});
+            this.cbxLetter.Location = new System.Drawing.Point(295, 149);
+            this.cbxLetter.Name = "cbxLetter";
+            this.cbxLetter.Size = new System.Drawing.Size(42, 21);
+            this.cbxLetter.TabIndex = 12;
+            this.cbxLetter.Visible = false;
+            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(363, 184);
+            this.Controls.Add(this.cbxLetter);
+            this.Controls.Add(this.cbVMapped);
             this.Controls.Add(this.cbOcx);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -164,5 +216,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox cbOcx;
+        private System.Windows.Forms.CheckBox cbVMapped;
+        private System.Windows.Forms.ComboBox cbxLetter;
     }
 }

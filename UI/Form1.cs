@@ -12,13 +12,18 @@ namespace artsystem_bat
 {
     public partial class Form1 : Form
     {
+        private bool isWaitingForTextChange = false;
+        private TaskCompletionSource<bool> textChangedTaskCompletionSource;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
+            // Inicia o temporizador para atualizar a barra de progresso
+            timer1.Start();
             //Instancia a classe entidades
             Entities entities = new Entities();
             // Recupera valores de configuração do aplicativo
@@ -29,14 +34,10 @@ namespace artsystem_bat
             {
                 Ocx ocx = new Ocx();
                 ocx.RunOcxVerification();
-
             }
 
             // Executa a verificação e execução do diretório
             RunDirectoryVerification();
-
-            // Inicia o temporizador para atualizar a barra de progresso
-            timer1.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -47,7 +48,7 @@ namespace artsystem_bat
                 switch (progressBar1.Value)
                 {
                     case int value when value < 40:
-                        textBox1.Text = "Carregando arquivos";
+                        textBox1.Text = "Verificando OCX";
                         break;
 
                     case int value when value >= 40 && value < 60:
@@ -86,7 +87,7 @@ namespace artsystem_bat
             try
             {
                 ArtBat art = new ArtBat();
-                art.ArtBatExe(directory);          
+                art.ArtBatExe(directory);
             }
             catch
             {
@@ -110,7 +111,7 @@ namespace artsystem_bat
                 }
 
             }
-            
+
         }
 
         // Método assíncrono para verificação do diretório
@@ -143,7 +144,7 @@ namespace artsystem_bat
             }
         }
 
-        private void btCancel_Click(object sender, EventArgs e)
+    private void btCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
