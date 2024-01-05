@@ -71,25 +71,33 @@ namespace artsystem_bat
 
                 case string value when value == "Mapear":
 
-                    try
+                    if (!string.IsNullOrEmpty(cbxLetter.Text) && string.IsNullOrEmpty(tbPath.Text))
                     {
-                        string networkPath = tbPath.Text;
-                        string driveLetter = cbxLetter.Text;
+                        try
+                        {
+                            string networkPath = tbPath.Text;
+                            string driveLetter = cbxLetter.Text;
 
-                        NetworkDrive mappedDrive = new NetworkDrive(networkPath, driveLetter);
+                            NetworkDrive mappedDrive = new NetworkDrive(networkPath, driveLetter);
 
-                        mappedDrive.MapDrive();
+                            mappedDrive.MapDrive();
 
-                        btAlterar.Text = "Salvar";
+                            btAlterar.Text = "Salvar";
 
-                        tbPath.Text = mappedDrive.GetMappedPath();
+                            tbPath.Text = mappedDrive.GetMappedPath();
 
-                        cbxLetter.Visible = false;
-                        cbVMapped.Checked = false;
+                            cbxLetter.Visible = false;
+                            cbVMapped.Checked = false;
+                        }
+                        catch (Exception ex) 
+                        {
+                            MessageBox.Show($"Ocorreu um erro ao mapear a unidade {ex.Message}");
+                        }
+
                     }
-                    catch (Exception ex) 
+                    else
                     {
-                        MessageBox.Show($"Ocorreu um erro ao mapear a unidade {ex.Message}");
+                        MessageBox.Show("Atenção\n insira a letra da unidade e o Path para mapear", "Mapeamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     break;
             }            
