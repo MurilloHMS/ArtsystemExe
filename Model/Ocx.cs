@@ -160,6 +160,7 @@ namespace artsystem_bat.Model
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.Verb = "runas";
 
                 process.Start();
                 //Aguarda o termino do processo

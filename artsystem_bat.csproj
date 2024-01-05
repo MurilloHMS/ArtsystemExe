@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>art-cmd.ico</ApplicationIcon>
+    <ApplicationIcon>Templates\art-cmd.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ArtSystem_Bat|AnyCPU'">
@@ -146,12 +146,10 @@
     <None Include="Data\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="art-cmd.ico" />
+    <Content Include="Templates\art-cmd.ico" />
     <Content Include="Templates\ArtSystem.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
