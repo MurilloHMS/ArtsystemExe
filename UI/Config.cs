@@ -54,7 +54,7 @@ namespace artsystem_bat
                     //Atualiza as propriedades usando os setters
                     entities.PathInitial = tbPath.Text;
                     entities.PathBat = tbBat.Text;
-                    entities.VerOcx = cbOcx.Checked ? "true" : "false"; // Substitui o if abaixo
+                    entities.VerOcx = cbOcx.Checked ? "true" : "false"; 
 
                     MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -150,5 +150,7 @@ namespace artsystem_bat
                 btAlterar.Text = "Mapear";
             }
         }
+
+        
     }
 }

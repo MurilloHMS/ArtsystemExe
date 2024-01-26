@@ -2,12 +2,15 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace artsystem_bat.Model
 {
     public class NetworkDrive
     {
+        [Required(ErrorMessage ="O Endereço para mapear é Obrigatório")]
         public string NetworkPath { get; set; }
+        [Required(ErrorMessage = "O Endereço para mapear é Obrigatório")]
         public string DriveLetter { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }

@@ -82,6 +82,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -100,6 +101,7 @@
     <Compile Include="Model\ArtBat.cs" />
     <Compile Include="Model\NetworkDrive.cs" />
     <Compile Include="Model\Ocx.cs" />
+    <Compile Include="Model\Setup.cs" />
     <Compile Include="UI\Config.cs">
       <SubType>Form</SubType>
     </Compile>
