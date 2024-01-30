@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btCancel = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Txt_Progressbar = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
@@ -53,21 +53,16 @@
             this.btCancel.UseVisualStyleBackColor = true;
             this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
-            // textBox1
+            // Txt_Progressbar
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(114, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(338, 13);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 30;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.Txt_Progressbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.Txt_Progressbar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Txt_Progressbar.ForeColor = System.Drawing.SystemColors.Window;
+            this.Txt_Progressbar.Location = new System.Drawing.Point(114, 26);
+            this.Txt_Progressbar.Name = "Txt_Progressbar";
+            this.Txt_Progressbar.Size = new System.Drawing.Size(338, 13);
+            this.Txt_Progressbar.TabIndex = 2;
+            this.Txt_Progressbar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
@@ -75,7 +70,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
             this.ClientSize = new System.Drawing.Size(589, 137);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Txt_Progressbar);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.progressBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -92,7 +87,7 @@
         #endregion
 
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox Txt_Progressbar;
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Timer timer1;
     }
