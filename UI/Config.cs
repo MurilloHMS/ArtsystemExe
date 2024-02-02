@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using artsystem_bat.Data;
 using artsystem_bat.Model;
 
 namespace artsystem_bat
@@ -14,15 +13,25 @@ namespace artsystem_bat
             InitializeComponent();
         }
 
+        private void updateForms(bool value)
+        {
+            tbPath.Enabled = value;
+            tbBat.Enabled = value;
+            cbOcx.Enabled = value;
+            cbVMapped.Enabled = value;
+            cbRemoveUX.Enabled = value;
+            cbx_LoadingSpeed.Enabled = value;
+        }
+
         private void Config_Load(object sender, EventArgs e)
         {
-            //Instancia propriedades entities
-            Entities entities = new Entities();
+            
+            Settings settings = new Settings();
 
             //salva configurações em variaveis
-            var pathInitial = entities.PathInitial;
-            var pathBat = entities.PathBat;
-            var verOcx = entities.VerOcx;
+            var pathInitial = settings.PathInitial;
+            var pathBat =  settings.PathBat;
+            var verOcx = settings.VerOcx;
 
             // Atribua os valores aos controles da interface
             tbPath.Text = pathInitial;
@@ -37,10 +46,7 @@ namespace artsystem_bat
             tbPath.BackColor = SystemColors.Window;
             tbBat.BackColor = SystemColors.Window;
 
-            tbPath.Enabled = true;
-            tbBat.Enabled = true;
-            cbOcx.Enabled = true;
-            cbVMapped.Enabled = true;
+            updateForms(true);
 
             switch (btAlterar.Text)
             {
@@ -49,12 +55,14 @@ namespace artsystem_bat
                     break;
 
                 case string value when value == "Salvar":
-                    Entities entities = new Entities();
 
+                    Settings settings = new Settings();
                     //Atualiza as propriedades usando os setters
-                    entities.PathInitial = tbPath.Text;
-                    entities.PathBat = tbBat.Text;
-                    entities.VerOcx = cbOcx.Checked ? "true" : "false"; 
+                    settings.PathInitial = tbPath.Text;
+                    settings.PathBat = tbBat.Text;
+                    settings.VerOcx = cbOcx.Checked ? "true" : "false";
+                    settings.LoadingSpeed = cbx_LoadingSpeed.Text;
+                    settings.RemoveUX = cbRemoveUX.Checked ? "true" : "false";
 
                     MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -62,10 +70,7 @@ namespace artsystem_bat
                     tbPath.BackColor = SystemColors.InactiveCaption;
                     tbBat.BackColor = SystemColors.InactiveCaption;
 
-                    tbPath.Enabled = false;
-                    tbBat.Enabled = false;
-                    cbOcx.Enabled = false;
-                    cbVMapped.Enabled = false;
+                    updateForms(false);
                     btAlterar.Text = "ALTERAR";
                     break;
 
@@ -146,11 +151,14 @@ namespace artsystem_bat
         {
             if(cbVMapped.Checked)
             {
-                cbxLetter.Visible = true;
+                cbxLetter.Enabled = true;
                 btAlterar.Text = "Mapear";
             }
+            else
+            {
+                cbxLetter.Enabled = false;
+                btAlterar.Text = "Salvar";
+            }
         }
-
-        
     }
 }

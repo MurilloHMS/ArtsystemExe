@@ -19,3 +19,8 @@ A:\artsystemexe\obj\Debug\artsystem_bat.csproj.GenerateResource.cache
 A:\artsystemexe\obj\Debug\artsystem_bat.csproj.CoreCompileInputs.cache
 A:\artsystemexe\obj\Debug\artsystem_bat.exe
 A:\artsystemexe\obj\Debug\artsystem_bat.pdb
+A:\artsystemexe\bin\Debug\ArtSystem_Bat.exe.manifest
+A:\artsystemexe\bin\Debug\ArtSystem_Bat.application
+A:\artsystemexe\obj\Debug\ArtSystem_Bat.TrustInfo.xml
+A:\artsystemexe\obj\Debug\ArtSystem_Bat.exe.manifest
+A:\artsystemexe\obj\Debug\ArtSystem_Bat.application

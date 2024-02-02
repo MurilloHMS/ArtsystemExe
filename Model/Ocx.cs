@@ -115,9 +115,10 @@ namespace artsystem_bat.Model
                     {
                         // Recupera valores de configuração do aplicativo
                         Entities entities = new Entities();
+                        Settings settings = new Settings();
 
                         //salva configurações em variaveis
-                        var pathInitial = entities.PathInitial;
+                        var pathInitial = settings.PathInitial;
 
                         // Inicia o processo de registro de OCX
                         ProcessStartInfo startInfo = new ProcessStartInfo
@@ -146,9 +147,12 @@ namespace artsystem_bat.Model
         private static void RegisterOCX(string ocxName)
         {
             Entities entities = new Entities();
+            Settings settings = new Settings();
 
             //salva configurações em variaveis
-            var pathBat = entities.PathBat;
+            var pathBat = settings.PathBat;
+
+
 
             try
             {

@@ -5,17 +5,18 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace artsystem_bat.Model
 {
-    internal class Setup
+    public class Setup
     {
         private ProgressBar ProgressBar { get; }
         private int ValueToStop { get; }
         private TextBox TXT_ProgressBar { get; }
-        private readonly Entities Entities = new Entities();
+        private readonly Settings settings = new Settings();
 
         private readonly Dictionary<int, string> keyValues = new Dictionary<int, string>
         {
@@ -36,10 +37,27 @@ namespace artsystem_bat.Model
         {
             TXT_ProgressBar.Text = keyValues[ValueToStop];
 
+            Settings settings = new Settings();
+            bool RemoveUx;
+            if (Convert.ToBoolean(settings.RemoveUX))
+            {
+                RemoveUx = true;
+            }
+            else
+            {
+                RemoveUx = false;
+            }
+            int LoadingSpeed = int.Parse(settings.LoadingSpeed);
+            
+
             while (ProgressBar.Value < ValueToStop)
             {
                 ProgressBar.Value++;
-                await Task.Delay(5); // Adiciona um pequeno atraso para a progressbar ser atualizada
+                if (!RemoveUx)
+                {
+                    await Task.Delay(LoadingSpeed); // Adiciona um pequeno atraso para a progressbar ser atualizada
+                    
+                }
             }          
 
             switch (TXT_ProgressBar.Text)
@@ -60,7 +78,7 @@ namespace artsystem_bat.Model
 
         private async Task VerifyOcxAsync()
         {
-            var verOcx = Entities.VerOcx;
+            var verOcx = settings.VerOcx;
 
             if (verOcx == "true")
             {
@@ -71,7 +89,7 @@ namespace artsystem_bat.Model
 
         private async Task RunDirectoryVerificationAsync()
         {
-            var pathInitial = Entities.PathInitial;
+            var pathInitial = settings.PathInitial;
 
             if (!Directory.Exists(pathInitial))
             {
@@ -91,7 +109,7 @@ namespace artsystem_bat.Model
 
         private async Task RunArtsystemAsync()
         {
-            var pathBat = Entities.PathBat;
+            var pathBat = settings.PathBat;
             var directory = Path.GetDirectoryName(@pathBat);
 
             try

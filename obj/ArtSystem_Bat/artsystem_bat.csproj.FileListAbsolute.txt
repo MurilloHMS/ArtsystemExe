@@ -27,3 +27,8 @@ A:\artsystemexe\obj\ArtSystem_Bat\artsystem_bat.csproj.CoreCompileInputs.cache
 A:\artsystemexe\obj\ArtSystem_Bat\artsystem_bat.exe
 A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe.config
 A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe
+A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.TrustInfo.xml
+A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.exe.manifest
+A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe.manifest
+A:\Executáveis\Artsystem_bat\ArtSystem_Bat.application
+A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.application

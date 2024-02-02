@@ -40,13 +40,23 @@
             this.cbOcx = new System.Windows.Forms.CheckBox();
             this.cbVMapped = new System.Windows.Forms.CheckBox();
             this.cbxLetter = new System.Windows.Forms.ComboBox();
+            this.cbRemoveUX = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbx_LoadingSpeed = new System.Windows.Forms.ComboBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbPath
             // 
             this.tbPath.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.tbPath.Enabled = false;
-            this.tbPath.Location = new System.Drawing.Point(35, 45);
+            this.tbPath.Location = new System.Drawing.Point(9, 32);
             this.tbPath.Name = "tbPath";
             this.tbPath.Size = new System.Drawing.Size(294, 20);
             this.tbPath.TabIndex = 0;
@@ -54,7 +64,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 29);
+            this.label1.Location = new System.Drawing.Point(6, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 13);
             this.label1.TabIndex = 1;
@@ -63,7 +73,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 91);
+            this.label2.Location = new System.Drawing.Point(6, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 3;
@@ -73,14 +83,14 @@
             // 
             this.tbBat.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.tbBat.Enabled = false;
-            this.tbBat.Location = new System.Drawing.Point(35, 107);
+            this.tbBat.Location = new System.Drawing.Point(9, 94);
             this.tbBat.Name = "tbBat";
             this.tbBat.Size = new System.Drawing.Size(294, 20);
             this.tbBat.TabIndex = 2;
             // 
             // btAlterar
             // 
-            this.btAlterar.Location = new System.Drawing.Point(59, 149);
+            this.btAlterar.Location = new System.Drawing.Point(43, 133);
             this.btAlterar.Name = "btAlterar";
             this.btAlterar.Size = new System.Drawing.Size(108, 23);
             this.btAlterar.TabIndex = 5;
@@ -90,7 +100,7 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(173, 149);
+            this.btnCancelar.Location = new System.Drawing.Point(157, 133);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(108, 23);
             this.btnCancelar.TabIndex = 6;
@@ -101,7 +111,7 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button1.Location = new System.Drawing.Point(295, 45);
+            this.button1.Location = new System.Drawing.Point(269, 32);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(34, 23);
             this.button1.TabIndex = 7;
@@ -112,7 +122,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.button2.Location = new System.Drawing.Point(295, 107);
+            this.button2.Location = new System.Drawing.Point(269, 94);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 23);
             this.button2.TabIndex = 8;
@@ -124,7 +134,7 @@
             // 
             this.cbOcx.AutoSize = true;
             this.cbOcx.Enabled = false;
-            this.cbOcx.Location = new System.Drawing.Point(271, 12);
+            this.cbOcx.Location = new System.Drawing.Point(6, 39);
             this.cbOcx.Name = "cbOcx";
             this.cbOcx.Size = new System.Drawing.Size(89, 17);
             this.cbOcx.TabIndex = 10;
@@ -135,7 +145,7 @@
             // 
             this.cbVMapped.AutoSize = true;
             this.cbVMapped.Enabled = false;
-            this.cbVMapped.Location = new System.Drawing.Point(160, 12);
+            this.cbVMapped.Location = new System.Drawing.Point(6, 22);
             this.cbVMapped.Name = "cbVMapped";
             this.cbVMapped.Size = new System.Drawing.Size(105, 17);
             this.cbVMapped.TabIndex = 10;
@@ -145,6 +155,7 @@
             // 
             // cbxLetter
             // 
+            this.cbxLetter.Enabled = false;
             this.cbxLetter.FormattingEnabled = true;
             this.cbxLetter.Items.AddRange(new object[] {
             "Z:",
@@ -173,35 +184,123 @@
             "C:",
             "B:",
             "A:"});
-            this.cbxLetter.Location = new System.Drawing.Point(295, 149);
+            this.cbxLetter.Location = new System.Drawing.Point(3, 135);
             this.cbxLetter.Name = "cbxLetter";
-            this.cbxLetter.Size = new System.Drawing.Size(42, 21);
+            this.cbxLetter.Size = new System.Drawing.Size(86, 21);
             this.cbxLetter.TabIndex = 12;
-            this.cbxLetter.Visible = false;
+            // 
+            // cbRemoveUX
+            // 
+            this.cbRemoveUX.AutoSize = true;
+            this.cbRemoveUX.Enabled = false;
+            this.cbRemoveUX.Location = new System.Drawing.Point(6, 57);
+            this.cbRemoveUX.Name = "cbRemoveUX";
+            this.cbRemoveUX.Size = new System.Drawing.Size(90, 17);
+            this.cbRemoveUX.TabIndex = 13;
+            this.cbRemoveUX.Text = "Remover UX ";
+            this.cbRemoveUX.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 119);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Letra da Unidade";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.cbx_LoadingSpeed);
+            this.groupBox1.Controls.Add(this.cbRemoveUX);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cbOcx);
+            this.groupBox1.Controls.Add(this.cbVMapped);
+            this.groupBox1.Controls.Add(this.cbxLetter);
+            this.groupBox1.Location = new System.Drawing.Point(348, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(169, 165);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Configurações Adicionais";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(61, 97);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Ms";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(124, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Tempo de Carregamento";
+            // 
+            // cbx_LoadingSpeed
+            // 
+            this.cbx_LoadingSpeed.Enabled = false;
+            this.cbx_LoadingSpeed.FormattingEnabled = true;
+            this.cbx_LoadingSpeed.Items.AddRange(new object[] {
+            "5",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30",
+            "35",
+            "40",
+            "45",
+            "50"});
+            this.cbx_LoadingSpeed.Location = new System.Drawing.Point(3, 94);
+            this.cbx_LoadingSpeed.Name = "cbx_LoadingSpeed";
+            this.cbx_LoadingSpeed.Size = new System.Drawing.Size(57, 21);
+            this.cbx_LoadingSpeed.TabIndex = 15;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.btnCancelar);
+            this.groupBox2.Controls.Add(this.tbPath);
+            this.groupBox2.Controls.Add(this.btAlterar);
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.tbBat);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(333, 166);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Dados do Sistema";
             // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(363, 184);
-            this.Controls.Add(this.cbxLetter);
-            this.Controls.Add(this.cbVMapped);
-            this.Controls.Add(this.cbOcx);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.btAlterar);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.tbBat);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.tbPath);
+            this.ClientSize = new System.Drawing.Size(521, 187);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Config";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Artsystem Configurações";
             this.Load += new System.EventHandler(this.Config_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -218,5 +317,13 @@
         private System.Windows.Forms.CheckBox cbOcx;
         private System.Windows.Forms.CheckBox cbVMapped;
         private System.Windows.Forms.ComboBox cbxLetter;
+        private System.Windows.Forms.CheckBox cbRemoveUX;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbx_LoadingSpeed;
     }
 }
