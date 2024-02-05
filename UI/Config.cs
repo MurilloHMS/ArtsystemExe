@@ -32,12 +32,14 @@ namespace artsystem_bat
             var pathInitial = settings.PathInitial;
             var pathBat =  settings.PathBat;
             var verOcx = settings.VerOcx;
+            var removeUx = settings.RemoveUX;
 
             // Atribua os valores aos controles da interface
             tbPath.Text = pathInitial;
             tbBat.Text = pathBat;
 
             cbOcx.Checked = Convert.ToBoolean(verOcx);
+            cbRemoveUX.Checked = Convert.ToBoolean(removeUx);
         }
 
 

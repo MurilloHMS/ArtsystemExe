@@ -258,7 +258,7 @@
             "35",
             "40",
             "45",
-            "50"});
+            "50 (Padrão)"});
             this.cbx_LoadingSpeed.Location = new System.Drawing.Point(3, 94);
             this.cbx_LoadingSpeed.Name = "cbx_LoadingSpeed";
             this.cbx_LoadingSpeed.Size = new System.Drawing.Size(57, 21);
