@@ -10,7 +10,7 @@ namespace artsystem_bat
         [STAThread]
         static void Main(String[] args)
         {
-            if (args.Length < 1 || !new List<string> { "config", "CONFIG", "-c", "-C", "as_install", "AS_INSTALL" }.Any(s => args[0].Contains(s)))  //Valores para abri as configurações do sistema ex: artsystem_bat.exe config 
+            if (args.Length < 1 || !new List<string> {"CONFIG", "-C", "AS_INSTALL" }.Any(s => args[0].Contains(s.ToUpper())))  //Valores para abrir as configurações do sistema ex: artsystem_bat.exe config 
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

@@ -25,6 +25,8 @@ namespace artsystem_bat
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            Logs logger = new Logs();
+            logger.LogError("Abrindo Sistema");
             await RunSetupAsync();
         }
 

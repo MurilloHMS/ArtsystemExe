@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="Data\Entities.cs" />
     <Compile Include="Model\ArtBat.cs" />
+    <Compile Include="Model\Logs.cs" />
     <Compile Include="Model\NetworkDrive.cs" />
     <Compile Include="Model\Ocx.cs" />
     <Compile Include="Model\Settings.cs" />

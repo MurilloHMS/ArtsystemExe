@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace artsystem_bat.Model
 {
@@ -9,20 +10,19 @@ namespace artsystem_bat.Model
     {
         public void ArtBatExe(string diretorioExe)
         {
-                
+                Logs logger = new Logs();
                 string tempPath = Path.GetTempPath();
             try
             {
                 string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
-                DateTime dataModificacaoExe = Directory.GetLastAccessTime(Path.Combine(diretorioExe, "NFe_Util"));
-                DateTime dataModificacaoTemporaria = Directory.GetLastAccessTime(tempPathNFeUtil);
+                
 
-                if (!Directory.Exists(tempPathNFeUtil) || TempVerification(diretorioExe, "NFe_Util"))
+                if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
                 {
                     CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
                     CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
                 }
-                if(TempVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                if(TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
                 {
                     File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
                     File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"),true);
@@ -33,7 +33,7 @@ namespace artsystem_bat.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro: {ex.Message}");
+                logger.LogError(ex.Message);
                 Application.Exit();
             }
             finally
@@ -41,24 +41,33 @@ namespace artsystem_bat.Model
                 StartArtSystem(tempPath, diretorioExe);
             }
         }
+        private static bool TempFileVerification(string diretorioExe, string value)
+        {
+            DateTime dataModificacaoExe = File.GetLastAccessTime(Path.Combine(diretorioExe, value));
+            DateTime dataModificacaoTemporaria = File.GetLastAccessTime(Path.Combine(Path.GetTempPath(), value));
+            return dataModificacaoExe > dataModificacaoTemporaria;
+        }
 
-        private static bool TempVerification( string diretorioExe, string value)
+        private static bool TempDirVerification( string diretorioExe, string value)
         {
             DateTime dataModificacaoExe = Directory.GetLastAccessTime(Path.Combine(diretorioExe, value));
             DateTime dataModificacaoTemporaria = Directory.GetLastAccessTime(Path.Combine(Path.GetTempPath(), value));
             return dataModificacaoExe > dataModificacaoTemporaria;
 
         }
-
+        
         private static void StartArtSystem(string tempPath, string diretorioExe)
         {
+            Logs logger = new Logs();
             Process process = new Process();
             process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
             process.StartInfo.WorkingDirectory = diretorioExe;
             process.StartInfo.UseShellExecute = true;
             process.StartInfo.CreateNoWindow = true;
             process.Start();
+            logger.LogError("Finalizando o EXE -> Sistema Aberto\n\n");
             Application.Exit();
+            
         }
     }
 

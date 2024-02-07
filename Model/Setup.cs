@@ -90,6 +90,9 @@ namespace artsystem_bat.Model
             {
                 var dialogResult = MessageBox.Show($"Falha ao encontrar o diretório:\n\n {pathInitial}",
                     "Verificação de diretório", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logs logger = new Logs();
+                logger.LogError($"Falha ao encontrar o diretório: {pathInitial}");
+                logger.LogError("Finalizando EXE por falha no Diretório\n\n");
 
                 if (dialogResult == DialogResult.OK)
                 {

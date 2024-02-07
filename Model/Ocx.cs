@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
@@ -56,7 +57,8 @@ namespace artsystem_bat.Model
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao verificar OCX {ocxName}: {ex.Message}");
+                Logs logger = new Logs();
+                logger.LogError($"Erro ao verificar OCX {ocxName}: {ex.Message}");
             }
 
             return achou;
@@ -80,6 +82,7 @@ namespace artsystem_bat.Model
             List<string> ocxNotInstalled = new List<string>();
 
             StringBuilder resultMessage = new StringBuilder();
+            Logs logger = new Logs();
 
             // Para cada OCX na lista, verifica se está instalada e gera uma mensagem correspondente
             foreach (var ocxName in OcxList)
@@ -96,25 +99,28 @@ namespace artsystem_bat.Model
                     ocxNotInstalled.Add(ocxName);
                 }
             }
-
-            // Exibe a mensagem resultante em uma caixa de diálogo
-            //MessageBox.Show(resultMessage.ToString(), "Verificação OCX", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+            logger.LogError(resultMessage.ToString());
+                        
             if(result.Contains("F"))
             {
-                if (IsRunAsAdministrator())
+                try
                 {
                     foreach(string ocxName in OcxList)
                     {
                         RegisterOCX(ocxName);
                     }
-                }
-                else
+
+                }catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao instalar a OCX {ex.Message}");
+                    logger.LogError(ex.Message);
+                };
+                
+                /*else
                 {
                     try
                     {
-                        // Recupera valores de configuração do aplicativo
-                        Entities entities = new Entities();
+                        // Recupera valores de configuração do aplicativo                        
                         Settings settings = new Settings();
 
                         //salva configurações em variaveis
@@ -138,9 +144,10 @@ namespace artsystem_bat.Model
                     catch (Win32Exception ex)
                     {
                         MessageBox.Show($"Erro ao iniciar o processo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        logger.LogError($"Erro ao iniciar o processo: {ex.Message}");
                     }
 
-                }
+                }*/
             }
         }
 
@@ -153,6 +160,7 @@ namespace artsystem_bat.Model
             var pathBat = settings.PathBat;
 
 
+            Logs logger = new Logs();
 
             try
             {
@@ -173,11 +181,14 @@ namespace artsystem_bat.Model
                 if (process.ExitCode != 0)
                 {
                     MessageBox.Show($"Erro ao registrar o arquivo: {ocxName}");
+                    logger.LogError($"Erro ao registrar o arquivo: {ocxName}");
+                    
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                logger.LogError(ex.Message);
             }
         }
 
