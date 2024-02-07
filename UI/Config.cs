@@ -33,6 +33,7 @@ namespace artsystem_bat
             var pathBat =  settings.PathBat;
             var verOcx = settings.VerOcx;
             var removeUx = settings.RemoveUX;
+            var loadingSpeed = settings.LoadingSpeed;
 
             // Atribua os valores aos controles da interface
             tbPath.Text = pathInitial;
@@ -40,6 +41,7 @@ namespace artsystem_bat
 
             cbOcx.Checked = Convert.ToBoolean(verOcx);
             cbRemoveUX.Checked = Convert.ToBoolean(removeUx);
+            cbx_LoadingSpeed.Text = loadingSpeed;
         }
 
 

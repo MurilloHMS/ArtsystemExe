@@ -43,7 +43,7 @@ namespace artsystem_bat.Model
         }
 
 
-        [STAThread]
+        
         public void WriteToRegistry()
         {
             try
@@ -59,7 +59,7 @@ namespace artsystem_bat.Model
                 System.Windows.Forms.MessageBox.Show($"Ocorreu um erro : {ex.Message}","Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
-        [STAThread]
+        
         public string ReadFromRegistry(string keyName)
         {
             try

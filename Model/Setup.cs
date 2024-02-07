@@ -1,11 +1,6 @@
-﻿using artsystem_bat.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -71,7 +66,7 @@ namespace artsystem_bat.Model
                     break;
 
                 case "Abrindo Artsystem":
-                    await RunArtsystemAsync();
+                    RunArtsystemAsync();
                     break;
             }
         }
@@ -107,27 +102,15 @@ namespace artsystem_bat.Model
             }
         }
 
-        private async Task RunArtsystemAsync()
+        private void RunArtsystemAsync()
         {
             var pathBat = settings.PathBat;
             var directory = Path.GetDirectoryName(@pathBat);
 
-            try
-            {
-                ArtBat art = new ArtBat();
-                art.ArtBatExe(directory);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                await Task.Run(() =>
-                {
-                    Application.Exit();
-                });
-            }
+            ArtBat art = new ArtBat();
+            art.ArtBatExe(directory);
+            
+            
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -8,62 +7,89 @@ namespace artsystem_bat.Model
 {
     internal class ArtBat
     {
-        public void ArtBatExe(string diretorioExe) 
+        public void ArtBatExe(string diretorioExe)
         {
-            //Caminho do diretório temporario da pasta NFe_util
-            string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
-
-            //verifica se a data de modificação do diretório NFe_Util na pasta raiz é maior que na pasta temporária
-            DateTime dataModificacaoExe = Directory.GetLastAccessTime(Path.Combine(diretorioExe, "NFe_Util"));
-            DateTime dataModificacaoTemporaria = Directory.GetLastAccessTime(tempPathNFeUtil);
-
-            if (!Directory.Exists(tempPathNFeUtil) || dataModificacaoExe > dataModificacaoTemporaria)
-            {
-                //copia o diretório NFe_util para o diretório temporário
-                CopyDirectory(Path.Combine(diretorioExe, "NFe_Util"), tempPathNFeUtil);
-            }
-
-            //lista de arquivos para copiar
-            List<string> files = new List<string>() { "*.DLL", "*.SQL" , "*.APP", "*.FLL" };
-
-            //copia os arquivos DLL, SQL e ART_SYSTEM.EXE para o diretório temporário
-            string tempPath = Path.GetTempPath();
-            foreach(string file in files)
-            {
-                CopyFiles(diretorioExe, tempPath, file);
-            }
-            File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
-            File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"), true);
-
-            //Inicia o sistema no diretório temporário
-            Process process = new Process();
-            process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
-            process.StartInfo.WorkingDirectory = diretorioExe;
-            process.EnableRaisingEvents = true;
-            
+                
+                string tempPath = Path.GetTempPath();
             try
             {
-                //Inicia o artsystem
-                process.Start();
+                string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
+                DateTime dataModificacaoExe = Directory.GetLastAccessTime(Path.Combine(diretorioExe, "NFe_Util"));
+                DateTime dataModificacaoTemporaria = Directory.GetLastAccessTime(tempPathNFeUtil);
 
-                //fecha o programa
-                Application.Exit();
+                if (!Directory.Exists(tempPathNFeUtil) || TempVerification(diretorioExe, "NFe_Util"))
+                {
+                    CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
+                    CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
+                }
+                if(TempVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                {
+                    File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
+                    File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"),true);
+
+                }
+
+               
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao abrir o processo: {ex.Message}");
+                MessageBox.Show($"Erro: {ex.Message}");
+                Application.Exit();
+            }
+            finally
+            {
+                StartArtSystem(tempPath, diretorioExe);
             }
         }
 
-        //Método para copiar um diretório e seu conteúdo para outro local
-        private static void CopyDirectory(string sourcePath, string destPath)
+        private static bool TempVerification( string diretorioExe, string value)
         {
-            if(!Directory.Exists(destPath)) 
+            DateTime dataModificacaoExe = Directory.GetLastAccessTime(Path.Combine(diretorioExe, value));
+            DateTime dataModificacaoTemporaria = Directory.GetLastAccessTime(Path.Combine(Path.GetTempPath(), value));
+            return dataModificacaoExe > dataModificacaoTemporaria;
+
+        }
+
+        private static void StartArtSystem(string tempPath, string diretorioExe)
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
+            process.StartInfo.WorkingDirectory = diretorioExe;
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.CreateNoWindow = true;
+            process.Start();
+            Application.Exit();
+        }
+    }
+
+    internal static class CopyUtility
+    {
+        public static void CopyNFeUtil(string sourcePath, string destPath)
+        {
+            if (!Directory.Exists(destPath))
             {
                 Directory.CreateDirectory(destPath);
             }
 
-            foreach(string file in Directory.GetFiles(sourcePath))
+            CopyDirectory(sourcePath, destPath);
+        }
+
+        public static void CopyFiles(string sourcePath, string destPath, params string[] searchPatterns)
+        {
+            foreach (string pattern in searchPatterns)
+            {
+                string[] files = Directory.GetFiles(sourcePath, pattern);
+                foreach (string file in files)
+                {
+                    string destFile = Path.Combine(destPath, Path.GetFileName(file));
+                    File.Copy(file, destFile, true);
+                }
+            }
+        }
+
+        private static void CopyDirectory(string sourcePath, string destPath)
+        {
+            foreach (string file in Directory.GetFiles(sourcePath))
             {
                 string destFile = Path.Combine(destPath, Path.GetFileName(file));
                 File.Copy(file, destFile, true);
@@ -73,17 +99,6 @@ namespace artsystem_bat.Model
             {
                 string destDir = Path.Combine(destPath, Path.GetFileName(dir));
                 CopyDirectory(dir, destDir);
-            }
-        }
-
-        //Método para copiar arquivos correspondentes ao padrão especificado
-        private static void CopyFiles(string sourcePath, string destPath, string searchPattern)
-        {
-            string[] files = Directory.GetFiles(sourcePath, searchPattern);
-            foreach (string file in files)
-            {
-                string destFile = Path.Combine(destPath, Path.GetFileName(file));
-                File.Copy(file, destFile, true);
             }
         }
     }
