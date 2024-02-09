@@ -89,12 +89,12 @@ namespace artsystem_bat.Model
             {
                 if (IsOCXInstalled(ocxName))
                 {
-                    resultMessage.AppendLine($"A OCX {ocxName} está instalada no sistema. ");
+                    resultMessage.AppendLine($"O Arquivo {ocxName} está instalado no sistema. ");
                     result.Add("T");
                 }
                 else
                 {
-                    resultMessage.AppendLine($"A OCX {ocxName} não está instalada no sistema. ");
+                    resultMessage.AppendLine($"O Arquivo {ocxName} não está instalado no sistema. ");
                     result.Add("F");
                     ocxNotInstalled.Add(ocxName);
                 }
