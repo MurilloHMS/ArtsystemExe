@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using artsystem_bat.Model;
+using System.Diagnostics;
 
 namespace artsystem_bat
 {
@@ -163,6 +164,16 @@ namespace artsystem_bat
                 cbxLetter.Enabled = false;
                 btAlterar.Text = "Salvar";
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var logDirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogsArtBat");
+            var logFilePath = Path.Combine(logDirectoryPath, "ErrorLog.txt");
+            
+            Process process = new Process();
+            process.StartInfo = new ProcessStartInfo(logFilePath);
+            process.Start();
         }
     }
 }

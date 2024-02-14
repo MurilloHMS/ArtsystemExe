@@ -2,7 +2,6 @@
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace artsystem_bat.Model
 {
@@ -11,7 +10,7 @@ namespace artsystem_bat.Model
          Logs logger = new Logs();
         public void ArtBatExe(string diretorioExe)
         {
-                string tempPath = Path.GetTempPath();
+            string tempPath = Path.GetTempPath();
             try
             {
                 string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
@@ -19,10 +18,10 @@ namespace artsystem_bat.Model
                 if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
                 {
                     CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
-                    CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
                 }
                 if(TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
                 {
+                    CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
                     File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
                     File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"),true);
 
@@ -30,8 +29,7 @@ namespace artsystem_bat.Model
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message);
-                
+                logger.LogError(ex.Message);                
             }
             finally
             {

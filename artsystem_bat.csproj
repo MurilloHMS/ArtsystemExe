@@ -136,6 +136,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="artsystem_bat_TemporaryKey.pfx" />
     <None Include="MurilloHMS.pfx" />
@@ -154,6 +155,7 @@
     <None Include="Data\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Event Log.ico" />
     <Content Include="Templates\art-cmd.ico" />
     <Content Include="Templates\ArtSystem.ico" />
   </ItemGroup>

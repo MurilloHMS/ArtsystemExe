@@ -2,8 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Principal;
@@ -14,42 +12,26 @@ namespace artsystem_bat.Model
 {
     internal class Ocx
     {
-
-        // Método estático para verificar se uma OCX está instalada no sistema
         private static bool IsOCXInstalled(string ocxName)
         {
-            bool achou = false;
-
             try
             {
-                // Abre a chave do registro Wow6432Node\\CLSID, que armazena informações sobre objetos COM.
-                // Se essa chave não existir, tenta abrir a chave CLSID diretamente.
-                RegistryKey key = Registry.ClassesRoot.OpenSubKey("Wow6432Node\\CLSID");
-                if (key == null)
-                {
-                    key = Registry.ClassesRoot.OpenSubKey("CLSID");
-                }
+                RegistryKey key = Registry.ClassesRoot.OpenSubKey("Wow6432Node\\CLSID") ?? Registry.ClassesRoot.OpenSubKey("CLSID");
 
-                // Se a chave do registro for encontrada
                 if (key != null)
                 {
-                    // Itera sobre as subchaves (CLSIDs) encontradas
                     foreach (var subKeyName in key.GetSubKeyNames())
                     {
-                        // Abre a subchave InprocServer32 associada ao CLSID
-                        RegistryKey clsidKey = key.OpenSubKey(subKeyName + "\\InprocServer32");
-
-                        // Se a subchave InprocServer32 for encontrada
-                        if (clsidKey != null)
+                        using (RegistryKey clsidKey = key.OpenSubKey(subKeyName + "\\InprocServer32"))
                         {
-                            // Obtém o valor padrão da subchave InprocServer32, que contém o caminho da DLL ou OCX
-                            object value = clsidKey.GetValue("");
-
-                            // Verifica se o valor contém o nome da OCX procurada
-                            if (value != null && value.ToString().IndexOf(ocxName, StringComparison.OrdinalIgnoreCase) >= 0)
+                            if (clsidKey != null)
                             {
-                                achou = true;  // OCX encontrada
-                                break;
+                                object value = clsidKey.GetValue("");
+
+                                if (value != null && value.ToString().IndexOf(ocxName, StringComparison.OrdinalIgnoreCase) >= 0)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -61,13 +43,76 @@ namespace artsystem_bat.Model
                 logger.LogError($"Erro ao verificar OCX {ocxName}: {ex.Message}");
             }
 
-            return achou;
+            return false;
         }
 
-        // Método estático para executar a verificação de OCX
+        private static void RegisterOCX(string ocxName)
+        {
+            Settings settings = new Settings();
+            var pathBat = settings.PathBat;
+            Logs logger = new Logs();
+
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = "regsvr32.exe",
+                    Verb = "runas",
+                    WorkingDirectory = Path.GetDirectoryName(pathBat),
+                    Arguments = $"/s {ocxName}",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
+                Process process = Process.Start(startInfo);
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    MessageBox.Show($"Falha ao registrar o arquivo: {ocxName}");
+                    logger.LogError($"Falha ao registrar o arquivo: {ocxName}");
+
+                    // Se o registro direto falhou, chama o arquivo .bat
+                    ExecuteRegisterOCXBatch();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao registrar a OCX {ocxName}: {ex.Message}");
+                logger.LogError($"Erro ao registrar a OCX {ocxName}: {ex.Message}");
+            }
+        }
+
+        private static void ExecuteRegisterOCXBatch()
+        {
+
+            // Recupera valores de configuração do aplicativo                        
+            Settings settings = new Settings();
+
+            //salva configurações em variaveis
+            var pathInitial = settings.PathInitial;
+            try
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = $@"{pathInitial}\REGISTRAR_OCX.bat",
+                    Verb = "runas",
+                    UseShellExecute = true
+                };
+
+                Process process = Process.Start(startInfo);
+                process.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao executar o arquivo .bat: {ex.Message}");
+            }
+        }
+
         public void RunOcxVerification()
         {
-            // Lista de OCXs a serem verificadas
             List<string> OcxList = new List<string>
             {
                 "mschrt20.ocx",
@@ -75,129 +120,28 @@ namespace artsystem_bat.Model
                 "mscomct2.ocx",
                 "mscomctl.ocx",
                 "mscomm32.ocx",
-                "comctl32.ocx"
+                "comctl32.ocx",
             };
-
-            List<string> result = new List<string>();
-            List<string> ocxNotInstalled = new List<string>();
 
             StringBuilder resultMessage = new StringBuilder();
             Logs logger = new Logs();
 
-            // Para cada OCX na lista, verifica se está instalada e gera uma mensagem correspondente
             foreach (var ocxName in OcxList)
             {
-                if (IsOCXInstalled(ocxName))
+                bool isInstalled = IsOCXInstalled(ocxName);
+
+                if (isInstalled)
                 {
-                    resultMessage.AppendLine($"O Arquivo {ocxName} está instalado no sistema. ");
-                    result.Add("T");
+                    resultMessage.AppendLine($"O Arquivo {ocxName} está instalado no sistema.");
                 }
                 else
                 {
-                    resultMessage.AppendLine($"O Arquivo {ocxName} não está instalado no sistema. ");
-                    result.Add("F");
-                    ocxNotInstalled.Add(ocxName);
+                    resultMessage.AppendLine($"O Arquivo {ocxName} não está instalado no sistema.");
+                    RegisterOCX(ocxName); // Tentar registrar a OCX
                 }
             }
+
             logger.LogError(resultMessage.ToString());
-                        
-            if(result.Contains("F"))
-            {
-                try
-                {
-                    foreach(string ocxName in OcxList)
-                    {
-                        RegisterOCX(ocxName);
-                    }
-
-                }catch (Exception ex)
-                {
-                    MessageBox.Show($"Erro ao instalar a OCX {ex.Message}");
-                    logger.LogError(ex.Message);
-                };
-                
-                /*else
-                {
-                    try
-                    {
-                        // Recupera valores de configuração do aplicativo                        
-                        Settings settings = new Settings();
-
-                        //salva configurações em variaveis
-                        var pathInitial = settings.PathInitial;
-
-                        // Inicia o processo de registro de OCX
-                        ProcessStartInfo startInfo = new ProcessStartInfo
-                        {
-                            FileName = $@"{pathInitial}\REGISTRAR_OCX.bat",
-                            Verb = "runas",  // Solicitar privilégios de administrador
-                            UseShellExecute = true
-                        };
-
-                        Process process = Process.Start(startInfo);
-                        process.WaitForExit();
-
-                        // Atualiza a configuração para desativar a verificação de OCX
-                        //var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                        //config.AppSettings.Settings["verOcx"].Value = "false";
-                    }
-                    catch (Win32Exception ex)
-                    {
-                        MessageBox.Show($"Erro ao iniciar o processo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        logger.LogError($"Erro ao iniciar o processo: {ex.Message}");
-                    }
-
-                }*/
-            }
-        }
-
-        private static void RegisterOCX(string ocxName)
-        {
-            Entities entities = new Entities();
-            Settings settings = new Settings();
-
-            //salva configurações em variaveis
-            var pathBat = settings.PathBat;
-
-
-            Logs logger = new Logs();
-
-            try
-            {
-                Process process = new Process();
-                process.StartInfo.FileName = "regsvr32.exe";
-                process.StartInfo.WorkingDirectory = Path.GetDirectoryName(pathBat);
-                process.StartInfo.Arguments = $"/s {ocxName}";
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.Verb = "runas";
-
-                process.Start();
-                //Aguarda o termino do processo
-                process.WaitForExit();
-
-                if (process.ExitCode != 0)
-                {
-                    MessageBox.Show($"Erro ao registrar o arquivo: {ocxName}");
-                    logger.LogError($"Erro ao registrar o arquivo: {ocxName}");
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                logger.LogError(ex.Message);
-            }
-        }
-
-        private static bool IsRunAsAdministrator()
-        {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }
