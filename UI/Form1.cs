@@ -27,7 +27,20 @@ namespace artsystem_bat
         {
             Logs logger = new Logs();
             logger.LogError("Abrindo Sistema");
-            await RunSetupAsync();
+            Settings settings = new Settings();
+            var pathinitial = settings.PathInitial;
+            var pathBat = settings.PathBat;
+            if (!(string.IsNullOrEmpty(pathBat)) && !(string.IsNullOrEmpty(pathinitial)))
+            {
+                await RunSetupAsync();
+            }
+            else
+            {
+                var message = "Atenção os dados das configurações estão vazios\n\nPara acessar as configurações abra no CMD : Artsystem_bat.exe -c\n\nFechando o sistema...";
+                MessageBox.Show(message, "Configurações Nulas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                logger.LogError(message);
+                Application.Exit();
+            }
         }
 
         private async Task RunSetupAsync()

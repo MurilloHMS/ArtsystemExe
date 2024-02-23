@@ -42,6 +42,12 @@ namespace artsystem_bat.Model
             set { _Value = value; _KeyName = "RemoveUX"; WriteToRegistry(); }
         }
 
+        public string PriorizaBat
+        {
+            get { return ReadFromRegistry("PriorizaBat"); }
+            set { _Value = value; _KeyName = "PriorizaBat"; WriteToRegistry(); }
+        }
+
 
         
         public void WriteToRegistry()

@@ -35,6 +35,7 @@ namespace artsystem_bat
             var verOcx = settings.VerOcx;
             var removeUx = settings.RemoveUX;
             var loadingSpeed = settings.LoadingSpeed;
+            var priorizaBat = settings.PriorizaBat;
 
             // Atribua os valores aos controles da interface
             tbPath.Text = pathInitial;
@@ -42,6 +43,7 @@ namespace artsystem_bat
 
             cbOcx.Checked = Convert.ToBoolean(verOcx);
             cbRemoveUX.Checked = Convert.ToBoolean(removeUx);
+            CbPriorizaBat.Checked = Convert.ToBoolean(priorizaBat);
             cbx_LoadingSpeed.Text = loadingSpeed;
         }
 
@@ -68,9 +70,10 @@ namespace artsystem_bat
                     settings.VerOcx = cbOcx.Checked ? "true" : "false";
                     settings.LoadingSpeed = cbx_LoadingSpeed.Text;
                     settings.RemoveUX = cbRemoveUX.Checked ? "true" : "false";
+                    settings.PriorizaBat = CbPriorizaBat.Checked ? "true" : "false";
 
                     MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    
 
                     tbPath.BackColor = SystemColors.InactiveCaption;
                     tbBat.BackColor = SystemColors.InactiveCaption;

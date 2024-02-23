@@ -10,28 +10,56 @@ namespace artsystem_bat.Model
          Logs logger = new Logs();
         public void ArtBatExe(string diretorioExe)
         {
+            Settings settings = new Settings();
+            bool priorizaBat = Convert.ToBoolean(settings.PriorizaBat);
             string tempPath = Path.GetTempPath();
+            bool abrirSistema = true;
+                                    
             try
             {
-                string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
-                
-                if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
+                if (priorizaBat)
                 {
-                    CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
+                    try
+                    {
+                        var pathBat = settings.PathBat;
+                        Process process = new Process();
+                        process.StartInfo.FileName = Path.Combine(@pathBat);
+                        process.StartInfo.WorkingDirectory = diretorioExe;
+                        process.StartInfo.UseShellExecute = true;
+                        process.StartInfo.CreateNoWindow = true;
+                        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                        process.Start();
+                        logger.LogError("Abrindo o Artsystem.Bat\n\n");
+                        abrirSistema = false;
+                        Application.Exit();
+                    }catch (Exception ex)
+                    {
+                        logger.LogError($"{ex.Message}");
+                    }
                 }
-                if(TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                else
                 {
-                    CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
-                    File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
-                    File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"),true);
+                    string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
 
+                    if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
+                    {
+                        CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
+                    }
+                    if (TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                    {
+                        CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
+                        File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
+                        File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"), true);
+                        abrirSistema=true;
+                    }
                 }
+                
             }
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);                
             }
-            finally
+            if (abrirSistema)
             {
                 StartArtSystem(tempPath, diretorioExe);
             }
