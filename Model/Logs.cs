@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 
 namespace artsystem_bat.Model
@@ -35,9 +36,17 @@ namespace artsystem_bat.Model
                 // Escreve no arquivo de log
                 File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                System.Windows.Forms.MessageBox.Show($"Acesso não autorizado ao acessar o arquivo: {ex.Message}", "UnauthorizedAccessException", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            catch (Win32Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show($"Windows Error: {ex.Message}", "Win32Exception", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show($"Erro ao salvar Log: {ex.Message}");
+                System.Windows.Forms.MessageBox.Show($"Erro ao salvar Log: {ex.Message}", "Exception", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
         }
     }

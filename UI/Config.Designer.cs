@@ -43,13 +43,13 @@
             this.cbRemoveUX = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbx_LoadingSpeed = new System.Windows.Forms.ComboBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -230,6 +230,30 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Configurações Adicionais";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(125, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(25, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Log";
+            // 
+            // button3
+            // 
+            this.button3.BackgroundImage = global::artsystem_bat.Properties.Resources.Event_Log;
+            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(121, 129);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(36, 30);
+            this.button3.TabIndex = 18;
+            this.button3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -285,35 +309,11 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dados do Sistema";
             // 
-            // button3
-            // 
-            this.button3.BackgroundImage = global::artsystem_bat.Properties.Resources.Event_Log;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(121, 129);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(36, 30);
-            this.button3.TabIndex = 18;
-            this.button3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(125, 113);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 13);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "Log";
-            // 
             // Config
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 187);
+            this.ClientSize = new System.Drawing.Size(521, 180);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
