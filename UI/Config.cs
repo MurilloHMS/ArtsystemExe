@@ -22,6 +22,7 @@ namespace artsystem_bat
             cbVMapped.Enabled = value;
             cbRemoveUX.Enabled = value;
             cbx_LoadingSpeed.Enabled = value;
+            CbPriorizaBat.Enabled = value;
         }
 
         private void Config_Load(object sender, EventArgs e)

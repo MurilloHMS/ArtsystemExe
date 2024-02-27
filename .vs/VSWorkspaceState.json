@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Properties",
     "\\UI"
   ],
-  "SelectedNode": "\\UI\\Config.cs",
+  "SelectedNode": "\\Properties\\AssemblyInfo.cs",
   "PreviewInSolutionExplorer": false
 }
