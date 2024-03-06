@@ -5,6 +5,11 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "artsystem_bat", "artsystem_bat.csproj", "{4D22729D-A80D-4F1E-992A-3C048B567992}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{F7C3844E-EA75-4505-BE2F-63FD2998A735}"
+	ProjectSection(SolutionItems) = preProject
+		..\Executáveis\Artsystem_bat\Newtonsoft.Json.dll = ..\Executáveis\Artsystem_bat\Newtonsoft.Json.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		ArtSystem_Bat|Any CPU = ArtSystem_Bat|Any CPU

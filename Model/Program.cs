@@ -14,7 +14,7 @@ namespace artsystem_bat
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1()); //Chama o formulário de loading
+                Application.Run(new Config()); //Chama o formulário de loading
             }
             else 
             {

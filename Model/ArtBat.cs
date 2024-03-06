@@ -11,38 +11,66 @@ namespace artsystem_bat.Model
          Logs logger = new Logs();
         public void ArtBatExe(string diretorioExe)
         {
+            Settings settings = new Settings();
+            bool priorizaBat = Convert.ToBoolean(settings.PriorizaBat);
             string tempPath = Path.GetTempPath();
+            bool abrirSistema = true;
+            int count = 1;
+            int abrirSistemaCount = int.Parse(settings.AbrirSistemaQuantidade);
+
             try
             {
-                string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
-                
-                if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
+                if (priorizaBat)
                 {
+                    do
+                    {
+                        try
+                        {
+                            var pathBat = settings.PathBat;
+                            Process process = new Process();
+                            process.StartInfo.FileName = Path.Combine(@pathBat);
+                            process.StartInfo.WorkingDirectory = diretorioExe;
+                            process.StartInfo.UseShellExecute = true;
+                            process.StartInfo.CreateNoWindow = true;
+                            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                            process.Start();
+                            logger.LogError("Abrindo o Artsystem.Bat\n\n");
+                            abrirSistema = false;
+                            Application.Exit();
+                            count++;
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogError($"{ex.Message}");
+                        }
+                    } while (count < abrirSistemaCount);
                     
-                    CopyUtility.CopyNFeUtil(Path.Combine(diretorioExe, "NFe_Util"), tempPathNFeUtil);
                 }
-                if(TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                else
                 {
-                    CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL", "WINRAR.EXE", "ART_SYSTEM.EXE");
-                    //File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
-                    //File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"),true);
+                    string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
+
+                    if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
+                    {
+                        CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
+                    }
+                    if (TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                    {
+                        CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
+                        File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
+                        File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"), true);
+                        abrirSistema=true;
+                    }
                 }
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                logger.LogError($"Erro de autorização: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                logger.LogError($"IO Exception: {ex.Message}");
+                
             }
             catch (Exception ex)
             {
                 logger.LogError(ex.Message);                
             }
-            finally
+            if (abrirSistema)
             {
-                StartArtSystem(tempPath, diretorioExe);
+                StartArtSystem(tempPath, diretorioExe, abrirSistema);
             }
         }
         private static bool TempFileVerification(string diretorioExe, string value)
@@ -58,46 +86,60 @@ namespace artsystem_bat.Model
             return dataModificacaoExe > dataModificacaoTemporaria;
 
         }        
-        private static void StartArtSystem(string tempPath, string diretorioExe)
+        private static void StartArtSystem(string tempPath, string diretorioExe, bool abrirSistema)
         {
             Logs logger = new Logs();
-            try
+            Settings settings = new Settings();
+            int abrirSistemaCount =  int.Parse(settings.AbrirSistemaQuantidade);
+            int count = 0;            
+            do
             {
-                Process process = new Process();
-                process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
-                process.StartInfo.WorkingDirectory = diretorioExe;
-                process.StartInfo.UseShellExecute = true;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-                logger.LogError("Finalizando o EXE -> Sistema Aberto\n\n");
+                try
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = Path.Combine(tempPath, "ART_SYSTEM.EXE");
+                    process.StartInfo.WorkingDirectory = diretorioExe;
+                    process.StartInfo.UseShellExecute = true;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.Start();
+                    logger.LogError("Finalizando o EXE -> Sistema Aberto\n\n");
+                    count++;
 
-                List<string> usuariosDesconectar = new List<string> { "Murillo", "USUARIO2", "USUARIO3" }; // Adicione sua lista de usuários
-                DesconectarUsuarios(usuariosDesconectar);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao Abrir o Sistema: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.LogError($"Erro ao Abrir o Sistema: {ex.Message}");
+                    Application.Exit();
+                }
+            } while (count <= abrirSistemaCount);
 
-                Application.Exit();
-            }catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao Abrir o Sistema: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                logger.LogError($"Erro ao Abrir o Sistema: {ex.Message}");
-                Application.Exit();
-            }
+            var usuarios = settings.ListaDeUsuarios;
+            List<string> usuariosDesconectar = new List<string>();
+            foreach (string s in usuarios) { usuariosDesconectar.Add(s); }// adiciona os usuários na lista
+            conectarUsuarios(usuariosDesconectar);
+
+            Application.Exit();
         }
-        private static void DesconectarUsuarios(List<string> usuarios)
+        private static void conectarUsuarios(List<string> usuarios)
         {
             foreach (string usuario in usuarios)
             {
-                DesconectarUsuario(usuario);
+                conectarUsuario(usuario);
             }
         }
 
-        private static void DesconectarUsuario(string nomeUsuario)
+        private static void conectarUsuario(string nomeUsuario)
         {
             try
             {
+                Settings settings = new Settings();
+                var rede = settings.LocalDeRede;
+
                 // Executar o processo do prompt de comando para desconectar o usuário
                 Process processo = new Process();
                 processo.StartInfo.FileName = "cmd.exe";
-                processo.StartInfo.Arguments = $"/C IF /I \"%USERNAME%\"==\"{nomeUsuario}\" NET USE U: \\192.168.18.100\\TPA /user:user sml10 /PERSISTENT:NO";
+                processo.StartInfo.Arguments = $"/C IF /I \"%USERNAME%\"==\"{nomeUsuario}\" NET USE U: \\{rede}\\TPA /user:user sml10 /PERSISTENT:NO";
                 processo.StartInfo.UseShellExecute = false;
                 processo.StartInfo.CreateNoWindow = true;
                 processo.StartInfo.RedirectStandardOutput = true;
