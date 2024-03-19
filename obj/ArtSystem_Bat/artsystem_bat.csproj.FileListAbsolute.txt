@@ -38,10 +38,8 @@ A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe.config
 A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe.manifest
 A:\Executáveis\Artsystem_bat\ArtSystem_Bat.application
 A:\Executáveis\Artsystem_bat\ArtSystem_Bat.exe
-A:\artsystemexe\obj\ArtSystem_Bat\artsystem_bat.csproj.Fody.CopyLocal.cache
-A:\artsystemexe\obj\ArtSystem_Bat\artsystem_bat.csproj.Fody.RuntimeCopyLocal.cache
 A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.TrustInfo.xml
 A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.exe.manifest
 A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.application
-A:\artsystemexe\obj\ArtSystem_Bat\artsystem_bat.csproj.CopyComplete
 A:\artsystemexe\obj\ArtSystem_Bat\ArtSystem_Bat.exe
+A:\artsystemexe\obj\ArtSystem_Bat\artsyste.A3961386.Up2Date
