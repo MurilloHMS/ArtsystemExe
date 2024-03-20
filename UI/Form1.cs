@@ -41,10 +41,9 @@ namespace artsystem_bat
                 DialogResult msg =  MessageBox.Show("Deseja abrir as configurações?", "Configurações Nulas", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (msg == DialogResult.Yes)
                 {
-                    using (Config config = new Config())
-                    {
-                        config.Show();
-                    }
+                    Config config = new Config();                    
+                    config.ShowDialog();
+                    
                 }
                 Application.Exit();
             }

@@ -112,12 +112,12 @@ namespace artsystem_bat.Model
                     logger.LogError($"Erro ao Abrir o Sistema: {ex.Message}");
                     Application.Exit();
                 }
-            } while (count <= abrirSistemaCount);
+            } while (count < abrirSistemaCount);
 
-            var usuarios = settings.ListaDeUsuarios;
-            List<string> usuariosDesconectar = new List<string>();
-            foreach (string s in usuarios) { usuariosDesconectar.Add(s); }// adiciona os usuários na lista
-            conectarUsuarios(usuariosDesconectar);
+            //var usuarios = settings.ListaDeUsuarios;
+            //List<string> usuariosDesconectar = new List<string>();
+            //foreach (string s in usuarios) { usuariosDesconectar.Add(s); }// adiciona os usuários na lista
+            //conectarUsuarios(usuariosDesconectar);
 
             Application.Exit();
         }
@@ -134,12 +134,12 @@ namespace artsystem_bat.Model
             try
             {
                 Settings settings = new Settings();
-                var rede = settings.LocalDeRede;
+                //var rede = settings.LocalDeRede;
 
                 // Executar o processo do prompt de comando para desconectar o usuário
                 Process processo = new Process();
                 processo.StartInfo.FileName = "cmd.exe";
-                processo.StartInfo.Arguments = $"/C IF /I \"%USERNAME%\"==\"{nomeUsuario}\" NET USE U: \\{rede}\\TPA /user:user sml10 /PERSISTENT:NO";
+                processo.StartInfo.Arguments = $"/C IF /I \"%USERNAME%\"==\"{nomeUsuario}\" NET USE U: \\rede\\TPA /user:user sml10 /PERSISTENT:NO";
                 processo.StartInfo.UseShellExecute = false;
                 processo.StartInfo.CreateNoWindow = true;
                 processo.StartInfo.RedirectStandardOutput = true;

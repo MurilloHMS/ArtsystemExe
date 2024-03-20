@@ -7,6 +7,7 @@ using artsystem_bat.UI;
 using System.Diagnostics;
 using System.Management;
 using System.Collections.Generic;
+using artsystem_bat.Data;
 
 namespace artsystem_bat
 {
@@ -28,17 +29,17 @@ namespace artsystem_bat
             CbPriorizaBat.Enabled = value;
             CbSistemaQuant.Enabled = value;
             RbMachine.Enabled = value;
-            RbUser.Enabled = value;            
-            txt_mapeamentoUsuarios.Enabled = value;
-            Cb_Usuarios.Enabled = value;
+            RbUser.Enabled = value;
+            ;// Cb_Usuarios.Enabled = value;
 
 
         }
 
         private void Config_Load(object sender, EventArgs e)
         {
-            getUsers();
+            //getUsers();
             Settings settings = new Settings();
+            Entities entities = new Entities();
 
             //salva configurações em variaveis
             var pathInitial = settings.PathInitial;
@@ -49,8 +50,20 @@ namespace artsystem_bat
             var priorizaBat = settings.PriorizaBat;
             var localSalvamento =Convert.ToBoolean(settings.LocalSalvamento);
             var abrirSistema = settings.AbrirSistemaQuantidade;
-            var localDeRede = settings.LocalDeRede;
-            List<string> usuarios = settings.ListaDeUsuarios;
+
+            if (localSalvamento)
+            {
+                pathInitial = entities.PathInitial;
+                pathBat = entities.PathBat;
+                verOcx = entities.VerOcx;
+                removeUx = entities.RemoveUX;
+                loadingSpeed = entities.LoadingSpeed;
+                priorizaBat = entities.PriorizaBat;
+                localSalvamento = Convert.ToBoolean(entities.LocalSalvamento);
+                abrirSistema = entities.AbrirSistemaQuantidade;
+            }
+            //var localDeRede = settings.LocalDeRede;
+            //List<string> usuarios = settings.ListaDeUsuarios;
 
             // Atribua os valores aos controles da interface
             tbPath.Text = pathInitial;
@@ -59,20 +72,33 @@ namespace artsystem_bat
             cbOcx.Checked = Convert.ToBoolean(verOcx);
             cbRemoveUX.Checked = Convert.ToBoolean(removeUx);
             CbPriorizaBat.Checked = Convert.ToBoolean(priorizaBat);
-            cbx_LoadingSpeed.Text = loadingSpeed;
-            CbSistemaQuant.Text = abrirSistema;
-            txt_mapeamentoUsuarios.Text = localDeRede;
+            for (int i = 0; i < cbx_LoadingSpeed.Items.Count; i++)
+            {
+                if (cbx_LoadingSpeed.Items[i].ToString() == loadingSpeed)
+                {
+                    cbx_LoadingSpeed.SelectedIndex = i;
+                    break;
+                }
+            }
+            for (int i = 0; i < CbSistemaQuant.Items.Count; i++)
+            {
+                if (CbSistemaQuant.Items[i].ToString() == abrirSistema)
+                {
+                    CbSistemaQuant.SelectedIndex = i;
+                    break;
+                }
+            }
             if (localSalvamento)
             {
-                RbUser.Checked = true;
-                RbMachine.Checked = false;
+                RbUser.Checked = false;
+                RbMachine.Checked = true;
             }
             else
             {
-                RbMachine.Checked = true;
-                RbUser.Checked = false;
+                RbMachine.Checked = false;
+                RbUser.Checked = true;
             }
-            if (usuarios != null)
+            /*if (usuarios != null)
             {
                 foreach (string users in usuarios)
                 {
@@ -82,7 +108,7 @@ namespace artsystem_bat
                         CkLb_Usuários.SetItemChecked(index, true);
                     }
                 }
-            }             
+            }   */
         }
 
         private void getUsers()
@@ -96,7 +122,7 @@ namespace artsystem_bat
                 foreach (ManagementObject m in queryCollection)
                 {
                     // Adiciona informações sobre cada usuário ao CheckedListBox
-                    CkLb_Usuários.Items.Add($"{m["Name"]}");
+                    //CkLb_Usuários.Items.Add($"{m["Name"]}");
                 }
             }
             catch (ManagementException e)
@@ -122,22 +148,51 @@ namespace artsystem_bat
 
                 case string value when value == "Salvar":
 
+                    var pathInitial = tbPath.Text;
+                    var pathBat = tbBat.Text;
+                    var verOCX = cbOcx.Checked ? "true" : "false";
+                    var loading = cbx_LoadingSpeed.SelectedItem.ToString();
+                    var removeUX = cbRemoveUX.Checked ? "true" : "false";
+                    var priorizaBat = CbPriorizaBat.Checked ? "true" : "false";
+                    var abrirSistemaQuant = CbSistemaQuant.SelectedItem.ToString();
+
                     Settings settings = new Settings();
+                    Entities entities = new Entities();
                     //Atualiza as propriedades usando os setters
-                    settings.PathInitial = tbPath.Text;
-                    settings.PathBat = tbBat.Text;
-                    settings.VerOcx = cbOcx.Checked ? "true" : "false";
-                    settings.LoadingSpeed = cbx_LoadingSpeed.SelectedIndex.ToString();
-                    settings.RemoveUX = cbRemoveUX.Checked ? "true" : "false";
-                    settings.PriorizaBat = CbPriorizaBat.Checked ? "true" : "false";
-                    settings.AbrirSistemaQuantidade = CbSistemaQuant.SelectedItem.ToString();
-                    settings.LocalDeRede = txt_mapeamentoUsuarios.Text;
-                    if (RbMachine.Checked) { settings.LocalSalvamento = "true"; } else {settings.LocalSalvamento = "false"; }
-                    foreach (object item in CkLb_Usuários.CheckedItems)
+                    settings.PathInitial = pathInitial;
+                    entities.PathInitial = pathInitial;
+                    //
+                    settings.PathBat = pathBat;
+                    entities.PathBat = pathBat;
+                    //
+                    settings.VerOcx = verOCX;
+                    entities.VerOcx = verOCX;
+                    //
+                    settings.LoadingSpeed = loading;
+                    entities.LoadingSpeed = loading;
+                    //
+                    settings.RemoveUX = removeUX;
+                    entities.RemoveUX = removeUX;
+                    //
+                    settings.PriorizaBat = priorizaBat;
+                    entities.PriorizaBat = priorizaBat;
+                    //
+                    settings.AbrirSistemaQuantidade = abrirSistemaQuant;
+                    entities.AbrirSistemaQuantidade = abrirSistemaQuant;
+                    if (RbMachine.Checked) 
+                    {
+                        settings.LocalSalvamento = "true";
+                        entities.LocalSalvamento = "true";
+                    } else if (RbUser.Checked) 
+                    {
+                        settings.LocalSalvamento = "false";
+                        entities.LocalSalvamento = "false";
+                    }
+                    /*foreach (object item in CkLb_Usuários.CheckedItems)
                     {
                         users.Add(item.ToString());
                     }
-                    settings.ListaDeUsuarios = users;
+                    settings.ListaDeUsuarios = users;*/
                     MessageBox.Show("Dados salvos com sucesso", "Config.ini", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     
 
@@ -269,7 +324,7 @@ namespace artsystem_bat
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (Cb_Usuarios.Checked)
+            /*if (Cb_Usuarios.Checked)
             {
 
                 CkLb_Usuários.Enabled = true;
@@ -278,11 +333,13 @@ namespace artsystem_bat
             else 
             {
                 CkLb_Usuários.Enabled = false;
-            }
+            }*/
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Em desenvolvimento");
+            return;
             DadosExtras dados = new DadosExtras();
             dados.ShowDialog();
         }

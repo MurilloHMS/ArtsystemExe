@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using Newtonsoft.Json; 
+using System.Collections.Generic; 
 
 namespace artsystem_bat.Model
 {
@@ -65,7 +64,7 @@ namespace artsystem_bat.Model
             get { return ReadFromRegistry("LocalSalvamento");}
             set { _Value = value; _KeyName = "LocalSalvamento";WriteToRegistry();}
         }
-
+        /*
         public string LocalDeRede
         {
             get { return ReadFromRegistry("LocalDeRede"); }
@@ -115,7 +114,7 @@ namespace artsystem_bat.Model
                 System.Windows.Forms.MessageBox.Show($"Ocorreu um erro : {ex.Message}", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             }
             return null;
-        }
+        }*/
         //Escreve os dados no registro do windows
         public void WriteToRegistry()
         {

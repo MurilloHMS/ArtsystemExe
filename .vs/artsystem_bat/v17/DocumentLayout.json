@@ -1,16 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "A:\\artsystemexe\\",
+  "WorkspaceRootPath": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|a:\\artsystemexe\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|solutionrelative:properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|c:\\users\\artsy\\trabalho\\desenvolvimento\\artsystemexe\\ui\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|solutionrelative:ui\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|artsystem_bat||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|c:\\users\\artsy\\trabalho\\desenvolvimento\\artsystemexe\\model\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|solutionrelative:model\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|a:\\artsystemexe\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|c:\\users\\artsy\\trabalho\\desenvolvimento\\artsystemexe\\data\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|solutionrelative:data\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|c:\\users\\artsy\\trabalho\\desenvolvimento\\artsystemexe\\model\\artbat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4D22729D-A80D-4F1E-992A-3C048B567992}|artsystem_bat.csproj|solutionrelative:model\\artbat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,26 +39,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AssemblyInfo.cs",
-              "DocumentMoniker": "A:\\artsystemexe\\Properties\\AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "Properties\\AssemblyInfo.cs",
-              "ToolTip": "A:\\artsystemexe\\Properties\\AssemblyInfo.cs",
-              "RelativeToolTip": "Properties\\AssemblyInfo.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "Title": "Config.cs",
+              "DocumentMoniker": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\UI\\Config.cs",
+              "RelativeDocumentMoniker": "UI\\Config.cs",
+              "ToolTip": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\UI\\Config.cs",
+              "RelativeToolTip": "UI\\Config.cs",
+              "ViewState": "AQIAAGUAAAAAAAAAAAAgwDwAAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-15T22:26:47.652Z",
+              "WhenOpened": "2024-03-20T14:53:20.821Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Data\\App.config",
+              "RelativeDocumentMoniker": "Data\\App.config",
+              "ToolTip": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Data\\App.config",
+              "RelativeToolTip": "Data\\App.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-03-20T15:37:22.822Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "artsystem_bat",
-              "DocumentMoniker": "A:\\artsystemexe\\artsystem_bat.csproj",
-              "RelativeDocumentMoniker": "artsystem_bat.csproj",
-              "ToolTip": "A:\\artsystemexe\\artsystem_bat.csproj",
-              "RelativeToolTip": "artsystem_bat.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-03-15T22:24:57.62Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Model\\Program.cs",
+              "RelativeDocumentMoniker": "Model\\Program.cs",
+              "ToolTip": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Model\\Program.cs",
+              "RelativeToolTip": "Model\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T14:58:16.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ArtBat.cs",
+              "DocumentMoniker": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Model\\ArtBat.cs",
+              "RelativeDocumentMoniker": "Model\\ArtBat.cs",
+              "ToolTip": "C:\\Users\\artsy\\trabalho\\desenvolvimento\\ArtsystemExe\\Model\\ArtBat.cs",
+              "RelativeToolTip": "Model\\ArtBat.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAHIAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-20T14:48:29.193Z",
               "EditorCaption": ""
             }
           ]
