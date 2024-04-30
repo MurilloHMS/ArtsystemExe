@@ -50,19 +50,19 @@ namespace artsystem_bat.Model
                 ProgressBar.Value++;
                 if (!RemoveUx)
                 {
-                    await Task.Delay(LoadingSpeed); // Adiciona um pequeno atraso para a progressbar ser atualizada
-                    
+                    Task.Delay(LoadingSpeed); // Adiciona um pequeno atraso para a progressbar ser atualizada
+
                 }
             }          
 
             switch (TXT_ProgressBar.Text)
             {
                 case "Verificando OCX":
-                    await VerifyOcxAsync();
+                    VerifyOcxAsync();
                     break;
 
                 case "Verificando diretórios":
-                    await RunDirectoryVerificationAsync();
+                    RunDirectoryVerificationAsync();
                     break;
 
                 case "Abrindo Artsystem":
@@ -71,7 +71,7 @@ namespace artsystem_bat.Model
             }
         }
 
-        private async Task VerifyOcxAsync()
+        private void VerifyOcxAsync()
         {
             var verOcx = settings.VerOcx;
 
@@ -82,7 +82,7 @@ namespace artsystem_bat.Model
             }
         }
 
-        private async Task RunDirectoryVerificationAsync()
+        private void RunDirectoryVerificationAsync()
         {
             var pathInitial = settings.PathInitial;
 

@@ -3,6 +3,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace artsystem_bat.Model
 {
@@ -17,51 +18,69 @@ namespace artsystem_bat.Model
             bool abrirSistema = true;
             int count = 1;
             int abrirSistemaCount = int.Parse(settings.AbrirSistemaQuantidade);
-
+            var pathBat = settings.PathBat;
             try
             {
-                if (priorizaBat)
+                if(!VerificaAsRetag(pathBat))
                 {
-                    do
+                    if (priorizaBat)
                     {
-                        try
+                        do
                         {
-                            var pathBat = settings.PathBat;
-                            Process process = new Process();
-                            process.StartInfo.FileName = Path.Combine(@pathBat);
-                            process.StartInfo.WorkingDirectory = diretorioExe;
-                            process.StartInfo.UseShellExecute = true;
-                            process.StartInfo.CreateNoWindow = true;
-                            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                            process.Start();
-                            logger.LogError("Abrindo o Artsystem.Bat\n\n");
-                            abrirSistema = false;
-                            Application.Exit();
-                            count++;
-                        }
-                        catch (Exception ex)
+                            try
+                            {
+
+                                Process process = new Process();
+                                process.StartInfo.FileName = @pathBat;
+                                process.StartInfo.WorkingDirectory = diretorioExe;
+                                process.StartInfo.UseShellExecute = true;
+                                process.StartInfo.CreateNoWindow = true;
+                                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                                process.Start();
+                                logger.LogError($"Abrindo o {Path.GetFileName(@pathBat)}\n\n");
+                                abrirSistema = false;
+                                Application.Exit();
+                                count++;
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.LogError($"{ex.Message}");
+                            }
+                        } while (count < abrirSistemaCount);
+
+                    }
+                    else
+                    {
+                        string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
+
+                        if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
                         {
-                            logger.LogError($"{ex.Message}");
+                            CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
                         }
-                    } while (count < abrirSistemaCount);
-                    
+                        if (TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
+                        {
+                            CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
+                            File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
+                            File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"), true);
+                            abrirSistema = true;
+                        }
+                    }
                 }
                 else
                 {
-                    string tempPathNFeUtil = Path.Combine(Path.GetTempPath(), "NFe_Util");
-
-                    if (!Directory.Exists(tempPathNFeUtil) || TempDirVerification(diretorioExe, "NFe_Util"))
-                    {
-                        CopyUtility.CopyNFeUtil(diretorioExe, tempPathNFeUtil);
-                    }
-                    if (TempFileVerification(diretorioExe, "ART_SYSTEM.EXE"))
-                    {
-                        CopyUtility.CopyFiles(diretorioExe, tempPath, "*.DLL", "*.SQL", "*.APP", "*.FLL");
-                        File.Copy(Path.Combine(diretorioExe, "WINRAR.EXE"), Path.Combine(tempPath, "WINRAR.EXE"), true);
-                        File.Copy(Path.Combine(diretorioExe, "ART_SYSTEM.EXE"), Path.Combine(tempPath, "ART_SYSTEM.EXE"), true);
-                        abrirSistema=true;
-                    }
+                    abrirSistema = false;
+                    Process process = new Process();
+                    process.StartInfo.FileName = @pathBat;
+                    process.StartInfo.WorkingDirectory = diretorioExe;
+                    process.StartInfo.UseShellExecute = true;
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    process.Start();
+                    logger.LogError($"Abrindo o {Path.GetFileName(@pathBat)}\n\n");
+                    abrirSistema = false;
+                    Application.Exit();
                 }
+               
                 
             }
             catch (Exception ex)
@@ -72,6 +91,12 @@ namespace artsystem_bat.Model
             {
                 StartArtSystem(tempPath, diretorioExe, abrirSistema);
             }
+        }
+
+        private bool VerificaAsRetag(string arquivo)
+        {
+            string fileName = Path.GetFileName(arquivo);
+            return fileName.Equals("As_Retag.exe", StringComparison.OrdinalIgnoreCase);
         }
         private static bool TempFileVerification(string diretorioExe, string value)
         {
@@ -103,6 +128,7 @@ namespace artsystem_bat.Model
                     process.StartInfo.CreateNoWindow = true;
                     process.Start();
                     logger.LogError("Finalizando o EXE -> Sistema Aberto\n\n");
+
                     count++;
 
                 }
@@ -224,6 +250,6 @@ namespace artsystem_bat.Model
             }
         }
 
-        
+                
     }
 }

@@ -13,10 +13,6 @@ namespace artsystem_bat
 {
     public partial class Form1 : Form
     {
-        private bool isWaitingForTextChange = false;
-        private TaskCompletionSource<bool> textChangedTaskCompletionSource;
-        
-
         public Form1()
         {
             InitializeComponent();

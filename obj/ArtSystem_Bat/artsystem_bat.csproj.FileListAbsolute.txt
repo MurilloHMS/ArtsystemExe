@@ -50,3 +50,5 @@ C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\ArtSystem
 C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\ArtSystem_Bat.exe.manifest
 C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\ArtSystem_Bat.application
 C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\artsyste.A3961386.Up2Date
+C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.csproj.Fody.CopyLocal.cache
+C:\Users\artsy\trabalho\desenvolvimento\ArtsystemExe\obj\ArtSystem_Bat\artsystem_bat.csproj.Fody.RuntimeCopyLocal.cache
